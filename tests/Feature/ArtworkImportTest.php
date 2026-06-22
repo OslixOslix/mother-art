@@ -37,4 +37,30 @@ class ArtworkImportTest extends TestCase
 
         File::deleteDirectory($path);
     }
+
+    public function test_imported_artwork_image_url_is_relative(): void
+    {
+        Storage::fake('public');
+
+        $path = storage_path('framework/testing/import-artworks-url');
+        File::ensureDirectoryExists($path);
+        File::put($path.'/sample.jpg', 'fake image');
+
+        app(ArtworkImportService::class)->importFrom($path);
+
+        $artwork = Artwork::firstOrFail();
+
+        $this->assertSame('/storage/'.$artwork->image_path, $artwork->imageUrl());
+
+        File::deleteDirectory($path);
+    }
+
+    public function test_public_storage_files_are_served(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('artworks/sample.jpg', 'fake image');
+
+        $this->get('/storage/artworks/sample.jpg')
+            ->assertOk();
+    }
 }

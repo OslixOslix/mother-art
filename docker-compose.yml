@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    container_name: mother-art-app
+    ports:
+      - "80:8000"
+    volumes:
+      - .:/app
+    environment:
+      APP_URL: http://localhost
+    restart: unless-stopped
