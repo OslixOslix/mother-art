@@ -74,6 +74,38 @@ class Artwork extends Model
         return $this->price ? number_format($this->price, 0, ',', ' ').' ₽' : null;
     }
 
+    public function previousPublished(): ?self
+    {
+        return static::query()
+            ->published()
+            ->where(function (Builder $query): void {
+                $query->where('published_at', '>', $this->published_at ?? now())
+                    ->orWhere(function (Builder $query): void {
+                        $query->where('published_at', $this->published_at)
+                            ->where('id', '>', $this->id);
+                    });
+            })
+            ->orderBy('published_at')
+            ->orderBy('id')
+            ->first();
+    }
+
+    public function nextPublished(): ?self
+    {
+        return static::query()
+            ->published()
+            ->where(function (Builder $query): void {
+                $query->where('published_at', '<', $this->published_at ?? now())
+                    ->orWhere(function (Builder $query): void {
+                        $query->where('published_at', $this->published_at)
+                            ->where('id', '<', $this->id);
+                    });
+            })
+            ->orderByDesc('published_at')
+            ->orderByDesc('id')
+            ->first();
+    }
+
     public static function uniqueSlug(string $title, ?int $ignoreId = null): string
     {
         $base = Str::slug($title) ?: Str::random(8);

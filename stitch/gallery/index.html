@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Елена Буркальцева | Тихая Галерея</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200;300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#cbc6ba",
+                        "surface-tint": "#bfc6db",
+                        "on-primary": "#293041",
+                        "on-primary-fixed": "#141c2b",
+                        "on-background": "#d9e3f7",
+                        "tertiary-fixed-dim": "#bfc7d2",
+                        "tertiary-container": "#0b131b",
+                        "inverse-surface": "#d9e3f7",
+                        "surface-variant": "#2b3545",
+                        "surface-container": "#16202f",
+                        "on-primary-fixed-variant": "#3f4758",
+                        "on-secondary-container": "#bab5a9",
+                        "secondary-fixed": "#e8e2d6",
+                        "on-tertiary-container": "#767e88",
+                        "on-primary-container": "#767d90",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#4a473e",
+                        "surface-container-lowest": "#050e1d",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#29313a",
+                        "on-secondary-fixed": "#1e1c14",
+                        "surface-bright": "#303a4a",
+                        "outline": "#8f9097",
+                        "surface-dim": "#091422",
+                        "primary-fixed-dim": "#bfc6db",
+                        "background": "#091422",
+                        "surface-container-high": "#202a3a",
+                        "on-surface": "#d9e3f7",
+                        "secondary-fixed-dim": "#cbc6ba",
+                        "on-surface-variant": "#c6c6cd",
+                        "on-secondary": "#333028",
+                        "tertiary-fixed": "#dbe3ef",
+                        "primary-container": "#0a1221",
+                        "on-tertiary-fixed": "#141c24",
+                        "surface": "#091422",
+                        "on-error": "#690005",
+                        "surface-container-low": "#121c2b",
+                        "inverse-on-surface": "#273140",
+                        "primary-fixed": "#dbe2f8",
+                        "primary": "#bfc6db",
+                        "on-tertiary-fixed-variant": "#404851",
+                        "outline-variant": "#45474c",
+                        "tertiary": "#bfc7d2",
+                        "surface-container-highest": "#2b3545",
+                        "on-secondary-fixed-variant": "#4a473e",
+                        "inverse-primary": "#575e70",
+                        "error-container": "#93000a",
+                        "passe-partout": "#f7f4ef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0rem",
+                        "lg": "0.125rem",
+                        "xl": "0.25rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "32px",
+                        "margin-mobile": "24px",
+                        "section-gap": "160px",
+                        "margin-desktop": "80px",
+                        "item-gap": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bodoni Moda"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "body-md": ["Manrope"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-lg": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg-mobile": ["Bodoni Moda"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.7", "fontWeight": "300"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                        "body-lg": ["20px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "200"}],
+                        "label-sm": ["11px", {"lineHeight": "1", "letterSpacing": "0.2em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #091422;
+            color: #d9e3f7;
+            scroll-behavior: smooth;
+        }
+        .gallery-item {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .gallery-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .passe-partout-frame {
+            background-color: #f7f4ef;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.4);
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @media (max-width: 768px) {
+            .passe-partout-frame {
+                padding: 24px;
+            }
+        }
+        .ornament-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(191, 198, 219, 0.3), transparent);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden selection:bg-primary/30">
+<!-- Навигация -->
+<nav class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline/10">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-margin-desktop py-6">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tighter">Елена Буркальцева</h1>
+<div class="hidden md:flex space-x-12 items-center">
+<a class="font-label-sm text-label-sm uppercase text-on-surface-variant hover:text-primary transition-all duration-500" href="#">Главная</a>
+<a class="font-label-sm text-label-sm uppercase text-primary border-b border-primary/40 pb-1" href="#">Галерея</a>
+<a class="font-label-sm text-label-sm uppercase text-on-surface-variant hover:text-primary transition-all duration-500" href="#">Об авторе</a>
+<a class="font-label-sm text-label-sm uppercase text-on-surface-variant hover:text-primary transition-all duration-500" href="#">Контакты</a>
+</div>
+<button class="md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+</div>
+</nav>
+<!-- Приветствие -->
+<header class="pt-60 pb-32 text-center max-w-5xl mx-auto px-margin-mobile">
+<div class="mb-8 flex justify-center items-center space-x-4 opacity-0 transition-opacity duration-1000" id="hero-ornament">
+<div class="w-16 ornament-line"></div>
+<span class="material-symbols-outlined text-primary text-xl">blur_on</span>
+<div class="w-16 ornament-line"></div>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-8 opacity-0 translate-y-10 transition-all duration-1000 ease-out" id="hero-title">
+        Душа — безмолвная галерея
+    </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant/70 italic max-w-2xl mx-auto opacity-0 transition-all duration-1000 delay-300" id="hero-subtitle">
+        Исследование меланхоличной красоты Серебряного века через символы, туман и лунный свет.
+    </p>
+</header>
+<!-- Галерея работ -->
+<main class="max-w-7xl mx-auto px-margin-desktop pb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-32 gap-x-item-gap items-start">
+<!-- Картина 1 -->
+<article class="gallery-item group">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-[3/4] object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyPYFPjMhjHuWW0TSjCsyAnFoXOYuxkAGnH8lZgFWq2qaR4v2ftBhizl5wZKTlIqVlpXhLPVAakIzeeiiZugcOJceJBlyzMhf808vxgxT4N38D6tgHvj-WwV71zXlfYo21NspCi28KbgNEuo2skA6zBECuiBMEVZBqD4iDHmHR-tuiG9xMOdGtxARsrHAXWTDYE86ENWW5hN6Xc52FcrhRKXoCxXHgBIa2lvKLste1YgaV1bzgzwyGAnfhsk2kRSaVOS9UN-22U"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Дух сумерек</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Холст, масло, 2023</p>
+</div>
+</article>
+<!-- Картина 2 -->
+<article class="gallery-item group mt-24">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-[3/5] object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAECzto_l3vlsq_qd-O_fxp4VpZ2WuYOKIlo0xQ1iSeErJMhKfE_2i1zS1-pI2Wr6S-85JAgpirSflazg7pmsUQqq0nC99xPMlGR4yaY_7NbLXZA45047tlWqIB7kuNUWbj4Due4-V148E3IKMFbpNSp1sWHtfiY9mSrwyi6wVWOgG-AYaWABgAZZ6vti94rEcvrMnrStz-V_a_IhXc-xb0p4ZF5pIUPYmslgcMGBMW6WuSMke4ld8d1dtK3QT56dFrjnC8ojKqrWo"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Безмолвная муза</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Авторская кукла</p>
+</div>
+</article>
+<!-- Картина 3 -->
+<article class="gallery-item group">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-[3/4] object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs8rVnMyG7h9QvkVYCHQYHGOFWr-ii2sgNDY_wH5djvyfotbZEDTzEjw7LBsu-5K8u95VpPicBdDWKxUAwPJpRsSzTSzEPamhxQD51iSfJ-vOfvb6AbR221y9lAk7BcJQKcYDh1su3TVs8y1yTl3l9J7mX2ubWIQrwJY9g8ZVvUW4imdn-VSCfCqMWrV4n1wgsmgMue9Yktv-58oEbVyIZG2id29dTMqFOJ9plHGo1h6xgoJQViuXZz3MyKbORM7CimCXhGdJTMsE"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Синяя меланхолия</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Акварель, бумага</p>
+</div>
+</article>
+<!-- Картина 4 -->
+<article class="gallery-item group lg:-mt-24">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-square object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTOhiP8DnDj2BK568VjKDDQAKnswguabUGP8NXlYvRsIjfDn5pgcl4rP104W-R-wcc5vM4nd_528NzPxNac7FiaWPEQA6A_c2WFV28l6xYqG1tcFIYzX9Erh7uJaj4U6pTwMi_ndJGydJKfi7KgIkxl63mtDlrKzz8eM9Whb1A87Hk7MtTCr2xqEO0SXSCVtUue_E-yd-n6Iq5RMJdeFi3GMhhgQUCMTYi6bwzWGsNEMXEQS3w53RJc2TYGxq7OG6zPNuEQmB864"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Шепот осени</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Гуашь, тушь</p>
+</div>
+</article>
+<!-- Картина 5 -->
+<article class="gallery-item group">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVPS3I22ngO-Fh1dbuljVVNEJdblpT_ST7XDvO4gFA17m9JjbMyCUPpD21Z88p7OYK3LTX4q0isX5affE8UgoCSurlH1h_GL19vJlIDg0jlXTceWEKJtu12MevMhHkA4DWyYp9w0ZEFkSyFRmP3tIe0h6E6FzTyB5NgGnbBlyUOO__7q08Jhxx4v84b46mXU-mEAms-gXj-zWKhHGMFpdT2FJXPNhm4cmqOUHkE8oUfjDV9BlfGg9ZOT6BR3BXqowkRcQUcsqLTAQ"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Полночный цвет</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Масло, картон</p>
+</div>
+</article>
+<!-- Картина 6 -->
+<article class="gallery-item group mt-12">
+<div class="passe-partout-frame mb-8">
+<div class="overflow-hidden bg-white/5">
+<img class="w-full aspect-[3/4] object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEOAsP-lpsipswRkJK5YWLGgJ21l1LJgC1KufgMWOYn8gM9IWo9fPE5yKBi0ovUJgHekyQPnvpUuAnvTH8tK8xKfycv9uDqJXV7gYOQlXsvpe-IisQfB00ewxgePiHj4OYyuIOlEwHQ7h-6_-JE6R_EyQQzoZ_F5GKXAL5gVWh9bHw_fq19pQg3_tJ5VTo5mwA82GR6BikANl7ou83SRruyxqyEwlSLh_VNGTRfSJelqyNUMs6OA1xskL30n9jWviEUWH0VDmSGXQ"/>
+</div>
+</div>
+<div class="flex flex-col items-center text-center space-y-3">
+<h3 class="font-headline-md text-headline-md text-on-surface">Небесный вальс</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.25em]">Темпера, дерево</p>
+</div>
+</article>
+</div>
+</main>
+<!-- Цитата -->
+<section class="max-w-7xl mx-auto px-margin-desktop py-section-gap border-t border-outline/10 text-center">
+<div class="max-w-3xl mx-auto space-y-12">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<blockquote class="font-headline-md italic text-primary leading-relaxed">
+            «Ее мазки — это не просто краска; это шепот минувшего века, отголоски печали и великолепия души, находящей красоту в тенях луны».
+        </blockquote>
+<div class="pt-8">
+<a class="inline-block px-14 py-5 border border-outline/30 font-label-sm text-label-sm uppercase tracking-[0.25em] text-on-surface hover:bg-primary/10 hover:border-primary transition-all duration-700" href="#">
+                Запросить каталог
+            </a>
+</div>
+</div>
+</section>
+<!-- Подвал -->
+<footer class="w-full py-24 border-t border-outline/5 bg-surface-container-lowest">
+<div class="flex flex-col items-center space-y-16 max-w-7xl mx-auto px-margin-desktop text-center">
+<div class="space-y-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tighter">Елена Буркальцева</h2>
+<div class="w-12 h-[1px] bg-primary/30 mx-auto"></div>
+</div>
+<nav class="flex flex-wrap justify-center gap-x-16 gap-y-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-[0.2em]" href="#">Выставки</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-[0.2em]" href="#">Пресса</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-[0.2em]" href="#">Instagram</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-500 uppercase tracking-[0.2em]" href="#">Контакты</a>
+</nav>
+<div class="space-y-6">
+<p class="font-headline-md italic text-primary/80">«Душа — это безмолвная галерея в лунном свете»</p>
+<p class="font-body-md text-sm text-on-surface-variant/40 tracking-widest">© 2024 ЕЛЕНА БУРКАЛЬЦЕВА. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+</div>
+</div>
+</footer>
+<script>
+    // Intersection Observer для эффекта появления
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        observer.observe(item);
+    });
+
+    // Анимация первого экрана
+    window.addEventListener('DOMContentLoaded', () => {
+        const title = document.getElementById('hero-title');
+        const subtitle = document.getElementById('hero-subtitle');
+        const ornament = document.getElementById('hero-ornament');
+        
+        setTimeout(() => {
+            ornament.classList.remove('opacity-0');
+            title.classList.remove('opacity-0', 'translate-y-10');
+            subtitle.classList.remove('opacity-0');
+        }, 400);
+    });
+
+    // Легкий параллакс для изображений при скролле
+    window.addEventListener('scroll', () => {
+        const images = document.querySelectorAll('.gallery-item img');
+        images.forEach(img => {
+            const rect = img.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const shift = (rect.top - window.innerHeight / 2) * 0.03;
+                img.style.transform = `translateY(${shift}px) scale(1.05)`;
+            }
+        });
+    });
+</script>
+</body></html>

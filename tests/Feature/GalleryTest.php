@@ -20,6 +20,11 @@ class GalleryTest extends TestCase
         $this->withoutVite();
     }
 
+    public function test_home_page_is_accessible(): void
+    {
+        $this->get(route('home'))->assertOk();
+    }
+
     public function test_gallery_shows_only_published_artworks(): void
     {
         $published = Artwork::factory()->create(['title' => 'Published Work']);

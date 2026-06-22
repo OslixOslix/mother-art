@@ -2,30 +2,218 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-headline: 'Bodoni Moda', ui-serif, Georgia, serif;
+    --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+    --color-background: #091422;
+    --color-surface: #091422;
+    --color-surface-dim: #091422;
+    --color-surface-bright: #303a4a;
+    --color-surface-container-lowest: #050e1d;
+    --color-surface-container-low: #121c2b;
+    --color-surface-container: #16202f;
+    --color-surface-container-high: #202a3a;
+    --color-surface-container-highest: #2b3545;
+    --color-surface-variant: #2b3545;
+    --color-surface-tint: #bfc6db;
+    --color-on-background: #d9e3f7;
+    --color-on-surface: #d9e3f7;
+    --color-on-surface-variant: #c6c6cd;
+    --color-primary: #bfc6db;
+    --color-on-primary: #293041;
+    --color-primary-container: #0a1221;
+    --color-on-primary-container: #767d90;
+    --color-secondary: #cbc6ba;
+    --color-on-secondary: #333028;
+    --color-secondary-fixed: #e8e2d6;
+    --color-secondary-container: #4a473e;
+    --color-on-secondary-container: #bab5a9;
+    --color-tertiary: #bfc7d2;
+    --color-on-tertiary: #29313a;
+    --color-outline: #8f9097;
+    --color-outline-variant: #45474c;
+    --color-passe-partout: #f7f4ef;
+
+    --spacing-margin-desktop: 80px;
+    --spacing-margin-mobile: 24px;
+    --spacing-section-gap: 160px;
+    --spacing-item-gap: 48px;
+    --spacing-gutter: 32px;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--color-background);
+        color: var(--color-on-surface);
+        -webkit-font-smoothing: antialiased;
+    }
 }
 
 @layer components {
-    .gallery-nav-link {
-        @apply border border-white/10 px-3 py-2 text-sm text-stone-300 transition hover:border-amber-300/70 hover:text-white;
+    .stitch-nav-link {
+        @apply font-body text-[12px] font-medium uppercase tracking-[0.2em] text-on-surface-variant transition-colors duration-500 hover:text-primary;
     }
 
-    .gallery-nav-link.is-active {
-        @apply border-amber-300 bg-amber-300 text-stone-950;
+    .stitch-nav-link.is-active {
+        @apply text-primary;
     }
 
-    .gallery-label {
-        @apply mb-2 block text-sm text-stone-300;
+    .stitch-nav-link.is-active--underlined {
+        @apply border-b border-primary/40 pb-1 text-primary;
     }
 
-    .gallery-input {
-        @apply w-full border border-white/10 bg-stone-900 px-4 py-3 text-white outline-none transition placeholder:text-stone-600 focus:border-amber-300;
+    .stitch-label {
+        @apply font-body text-[12px] font-medium uppercase tracking-[0.2em] text-on-surface-variant;
     }
 
-    .gallery-error {
-        @apply mt-2 block text-sm text-red-300;
+    .stitch-input {
+        @apply w-full border-0 border-b border-outline/20 bg-transparent py-5 font-body text-base text-on-surface outline-none transition placeholder:text-transparent focus:border-primary focus:ring-0;
+    }
+
+    .stitch-input-label {
+        @apply pointer-events-none absolute top-5 left-0 font-body text-[12px] font-medium uppercase tracking-[0.2em] text-on-surface-variant/40 transition-all;
+    }
+
+    .stitch-input:focus + .stitch-input-label,
+    .stitch-input:not(:placeholder-shown) + .stitch-input-label {
+        @apply -top-4 text-[10px] text-primary;
+    }
+
+    .stitch-btn-outline {
+        @apply inline-block border border-outline/20 px-14 py-5 font-body text-[12px] font-medium uppercase tracking-[0.3em] text-on-surface transition-all duration-700 hover:border-primary/50 hover:bg-primary/5;
+    }
+
+    .stitch-btn-primary {
+        @apply inline-block bg-on-surface px-14 py-5 font-body text-[12px] font-medium uppercase tracking-[0.3em] text-background shadow-xl shadow-black/20 transition-all duration-500 hover:bg-primary hover:text-on-primary;
+    }
+
+    .stitch-btn-inquire {
+        @apply relative w-full overflow-hidden border border-primary/20 bg-surface-container-high py-6 font-body text-[12px] font-medium uppercase tracking-[0.3em] text-primary transition-all duration-700 hover:border-primary/60 hover:bg-primary/5;
+    }
+
+    .stitch-passe-partout {
+        background: #e2e8f0;
+        padding: 32px;
+        box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.6);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+    }
+
+    .stitch-passe-partout::after {
+        content: '';
+        position: absolute;
+        inset: 31px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        pointer-events: none;
+    }
+
+    .stitch-passe-partout:hover {
+        box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+        transform: translateY(-4px);
+    }
+
+    .stitch-passe-partout-inner {
+        box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        background: #f8fafc;
+    }
+
+    .stitch-passe-partout-frame {
+        background-color: var(--color-passe-partout);
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.05), 0 20px 40px rgba(0, 0, 0, 0.4);
+        padding: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stitch-passe-partout-artwork {
+        background: #f8f7f2;
+        padding: 48px;
+        box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.03), 0 30px 60px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+    }
+
+    .stitch-passe-partout-artwork-inner {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 1px;
+        background: white;
+    }
+
+    .stitch-ornament-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(191, 198, 219, 0.3), transparent);
+    }
+
+    .stitch-silver-line {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(181, 189, 200, 0.2), transparent);
+    }
+
+    .stitch-reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stitch-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .stitch-reveal-image {
+        opacity: 0;
+        scale: 1.05;
+        filter: blur(10px);
+        transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), scale 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stitch-reveal-image.is-visible {
+        opacity: 1;
+        scale: 1;
+        filter: blur(0);
+    }
+
+    .stitch-gallery-item {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .stitch-gallery-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .stitch-fade-in-up {
+        animation: stitchFadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+    }
+}
+
+@keyframes stitchFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .stitch-passe-partout-frame {
+        padding: 24px;
     }
 }

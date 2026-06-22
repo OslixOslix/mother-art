@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Царевна Несмеяна | Елена Буркальцева</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@200;300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0a1221",
+                        "on-tertiary-fixed": "#141c24",
+                        "on-primary-container": "#767d90",
+                        "on-primary-fixed": "#141c2b",
+                        "on-tertiary-container": "#767e88",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#091422",
+                        "secondary-fixed-dim": "#cbc6ba",
+                        "on-tertiary": "#29313a",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#bab5a9",
+                        "on-surface-variant": "#c6c6cd",
+                        "inverse-primary": "#575e70",
+                        "primary-fixed": "#dbe2f8",
+                        "on-background": "#d9e3f7",
+                        "primary": "#bfc6db",
+                        "surface-container-high": "#202a3a",
+                        "on-tertiary-fixed-variant": "#404851",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#4a473e",
+                        "inverse-on-surface": "#273140",
+                        "on-primary": "#293041",
+                        "on-secondary": "#333028",
+                        "surface-tint": "#bfc6db",
+                        "outline-variant": "#45474c",
+                        "background": "#091422",
+                        "tertiary": "#bfc7d2",
+                        "on-primary-fixed-variant": "#3f4758",
+                        "surface-variant": "#2b3545",
+                        "secondary-fixed": "#e8e2d6",
+                        "surface-dim": "#091422",
+                        "on-surface": "#d9e3f7",
+                        "surface-container-low": "#121c2b",
+                        "surface-container": "#16202f",
+                        "inverse-surface": "#d9e3f7",
+                        "outline": "#8f9097",
+                        "primary-fixed-dim": "#bfc6db",
+                        "on-secondary-fixed-variant": "#4a473e",
+                        "on-secondary-fixed": "#1e1c14",
+                        "on-error": "#690005",
+                        "secondary": "#cbc6ba",
+                        "surface-bright": "#303a4a",
+                        "tertiary-container": "#0b131b",
+                        "surface-container-highest": "#2b3545",
+                        "tertiary-fixed": "#dbe3ef",
+                        "tertiary-fixed-dim": "#bfc7d2",
+                        "surface-container-lowest": "#050e1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "24px",
+                        "section-gap": "160px",
+                        "margin-desktop": "80px",
+                        "item-gap": "24px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Manrope"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Bodoni Moda"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "headline-lg": ["Bodoni Moda"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #091422;
+            color: #d9e3f7;
+            scroll-behavior: smooth;
+        }
+        .ethereal-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .fade-in-up {
+            animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .silver-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(181, 189, 200, 0.2), transparent);
+        }
+        .passe-partout {
+            background: #f8f7f2;
+            padding: 48px;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.03), 0 30px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+        .passe-partout-inner {
+            border: 1px solid rgba(0,0,0,0.08);
+            padding: 1px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(181, 189, 200, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(181, 189, 200, 0.2);
+        }
+    </style>
+</head>
+<body class="font-body-md selection:bg-primary/30 overflow-x-hidden">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline/10">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<a class="font-headline-md text-headline-md text-on-surface tracking-tight" href="/">Елена Буркальцева</a>
+<div class="hidden md:flex space-x-10 items-center">
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Главная</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-primary border-b border-primary/40 pb-1" href="#">Галерея</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Об авторе</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Контакты</a>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-section-gap min-h-screen">
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Header Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+<a class="group inline-flex items-center space-x-3 text-on-surface-variant/60 hover:text-primary transition-colors duration-500" href="#">
+<span class="material-symbols-outlined text-sm">arrow_back_ios</span>
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em]">Вернуться в галерею</span>
+</a>
+<div class="flex items-center space-x-8">
+<div class="flex items-center space-x-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant/40">РАБОТА 07 ИЗ 84</span>
+<div class="flex items-center space-x-2">
+<a class="w-10 h-10 flex items-center justify-center border border-outline/10 hover:border-primary/40 hover:text-primary transition-all text-on-surface-variant/60" href="#">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</a>
+<a class="w-10 h-10 flex items-center justify-center border border-outline/10 hover:border-primary/40 hover:text-primary transition-all text-on-surface-variant/60" href="#">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-20 items-start">
+<!-- Artwork Section -->
+<div class="lg:col-span-7 fade-in-up" style="animation-delay: 0.1s;">
+<div class="passe-partout group">
+<div class="passe-partout-inner bg-white">
+<div class="relative overflow-hidden">
+<img alt="Царевна Несмеяна" class="w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWws9FoWxuHDG72N-XffDf2KhLa2EAxELB6m8Ca_NZSWMZgNvMyIuCYldLfglyxYcWF0VUukQlQoqPiAX0jzEd7jQKSB4fd1TV0Pl5mcLNIDa8_QXexs_QRB9xwswhpU6lpGW-0zOAKlaCsXLNyEaG0SHF8TU21fScdyd-XXK2Uz5S7CJoaQSEwLTk4cen79s2HMaxXdlyFFOQiEC7kdkmQDjU9TpIRAeS6FYTZ9DpzS3VOjcoaFzg2AJM_0U3PO8B7e9iCcqETw"/>
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+</div>
+</div>
+<!-- Aesthetic labels typical of 'Exquisite' style -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none">
+<span class="font-label-sm text-[10px] tracking-[0.5em] text-black">BURKALTSEVA • 2023</span>
+</div>
+</div>
+<!-- Thumbnail Context Strip -->
+<div class="mt-12">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-primary/40">Другие работы из серии</span>
+<a class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors" href="#">Смотреть все</a>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
+<!-- Simulated collection context -->
+<div class="flex-shrink-0 w-20 aspect-square border border-outline/10 p-1 bg-surface-container-low grayscale hover:grayscale-0 transition-all cursor-pointer opacity-40">
+<div class="w-full h-full bg-surface-container-high"></div>
+</div>
+<div class="flex-shrink-0 w-20 aspect-square border border-outline/10 p-1 bg-surface-container-low grayscale hover:grayscale-0 transition-all cursor-pointer opacity-40">
+<div class="w-full h-full bg-surface-container-high"></div>
+</div>
+<div class="flex-shrink-0 w-20 aspect-square border border-primary/40 p-1 bg-surface-container-low transition-all cursor-pointer ring-1 ring-primary/20">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWws9FoWxuHDG72N-XffDf2KhLa2EAxELB6m8Ca_NZSWMZgNvMyIuCYldLfglyxYcWF0VUukQlQoqPiAX0jzEd7jQKSB4fd1TV0Pl5mcLNIDa8_QXexs_QRB9xwswhpU6lpGW-0zOAKlaCsXLNyEaG0SHF8TU21fScdyd-XXK2Uz5S7CJoaQSEwLTk4cen79s2HMaxXdlyFFOQiEC7kdkmQDjU9TpIRAeS6FYTZ9DpzS3VOjcoaFzg2AJM_0U3PO8B7e9iCcqETw"/>
+</div>
+<div class="flex-shrink-0 w-20 aspect-square border border-outline/10 p-1 bg-surface-container-low grayscale hover:grayscale-0 transition-all cursor-pointer opacity-40">
+<div class="w-full h-full bg-surface-container-high"></div>
+</div>
+<div class="flex-shrink-0 w-20 aspect-square border border-outline/10 p-1 bg-surface-container-low grayscale hover:grayscale-0 transition-all cursor-pointer opacity-40">
+<div class="w-full h-full bg-surface-container-high"></div>
+</div>
+<div class="flex-shrink-0 w-20 aspect-square border border-outline/10 p-1 bg-surface-container-low grayscale hover:grayscale-0 transition-all cursor-pointer opacity-40">
+<div class="w-full h-full bg-surface-container-high"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Details Section -->
+<div class="lg:col-span-5 flex flex-col space-y-12 fade-in-up" style="animation-delay: 0.3s;">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4 leading-tight">Царевна Несмеяна</h1>
+<p class="font-headline-md italic text-primary/70 tracking-wide">The Princess Who Never Smiled</p>
+</div>
+<div class="silver-line w-full"></div>
+<div class="space-y-8">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                        Глубокое исследование меланхолии «Серебряного века». В этой интерпретации царевна пребывает в плену собственного изысканного убранства — слезы прокладывают безмолвный маршрут на лице, застывшем в элегантной скорби. Затейливые мотивы её одеяния повествуют о тяжелом наследии, где каждая жемчужина — бремя, а каждый стежок — тайна.
+                    </p>
+<div class="border-l border-primary/20 pl-8 py-2">
+<p class="font-body-md italic text-secondary/60 leading-relaxed">
+                            «Душа — это тихая галерея в лунном свете, где даже тени венчаны инеем».
+                        </p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-12 pt-4">
+<div class="space-y-3">
+<span class="font-label-sm text-[10px] uppercase tracking-[0.3em] text-primary/40 block">Техника исполнения</span>
+<span class="font-body-md text-on-surface">Смешанная техника, архивный картон, сусальное золото</span>
+</div>
+<div class="space-y-3">
+<span class="font-label-sm text-[10px] uppercase tracking-[0.3em] text-primary/40 block">Габариты</span>
+<span class="font-body-md text-on-surface">65 x 85 см</span>
+</div>
+</div>
+<div class="pt-10 flex flex-col space-y-6">
+<button class="w-full py-6 bg-surface-container-high border border-primary/20 hover:border-primary/60 hover:bg-primary/5 transition-all duration-700 font-label-sm text-label-sm uppercase tracking-[0.3em] text-primary group relative overflow-hidden">
+<span class="relative z-10">Узнать о наличии оригинала</span>
+<div class="absolute inset-0 bg-primary/5 -translate-x-full group-hover:translate-x-0 transition-transform duration-700"></div>
+</button>
+<button class="w-full py-2 text-on-surface-variant/50 hover:text-primary transition-colors duration-500 font-label-sm text-[10px] uppercase tracking-[0.3em] text-center flex items-center justify-center space-x-4">
+<span>Заказать лимитированный принт</span>
+<span class="material-symbols-outlined text-base">open_in_new</span>
+</button>
+</div>
+<!-- Subtle Pagination for large collection -->
+<div class="pt-16 border-t border-outline/10 flex items-center justify-between">
+<a class="group flex flex-col items-start gap-1" href="#">
+<span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40 group-hover:text-primary/40 transition-colors">Предыдущая</span>
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Зимний сад</span>
+</a>
+<div class="w-px h-12 bg-outline/10"></div>
+<a class="group flex flex-col items-end gap-1 text-right" href="#">
+<span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40 group-hover:text-primary/40 transition-colors">Следующая</span>
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Лунная серенада</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Exhibition Context Section -->
+<section class="mt-section-gap opacity-0 fade-in-up" style="animation-delay: 0.5s;">
+<div class="max-w-3xl mx-auto text-center space-y-12">
+<div class="flex flex-col items-center space-y-4">
+<div class="w-12 h-px bg-primary/30"></div>
+<span class="font-label-sm text-label-sm uppercase tracking-[0.5em] text-primary/50">Текущая экспозиция</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg italic">«Стихи безмолвной ночи»</h2>
+<p class="font-body-md text-on-surface-variant max-w-xl mx-auto leading-relaxed">
+                    Выставка в пространстве «Эрмитажного лофта», Санкт-Петербург. Открыта для посещения до конца декабря 2024 года.
+                </p>
+<a class="inline-flex items-center space-x-4 border-b border-primary/20 pb-2 text-primary/80 hover:text-on-surface hover:border-primary transition-all duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">
+<span>Смотреть каталог выставки</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</section>
+</div>
+</main>
+<footer class="bg-surface-container-lowest border-t border-outline/10 w-full py-section-gap">
+<div class="flex flex-col items-center space-y-16 max-w-7xl mx-auto px-margin-desktop text-center">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Елена Буркальцева</h3>
+<div class="silver-line w-24"></div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-6">
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">Галерея</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">Выставки</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">Пресса</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">Instagram</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors duration-500 font-label-sm uppercase tracking-[0.2em]" href="#">Контакты</a>
+</div>
+<div class="pt-10 opacity-30">
+<p class="font-body-md text-xs tracking-widest">© 2024 ЕЛЕНА БУРКАЛЬЦЕВА. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+</div>
+</div>
+</footer>
+<!-- Grainy Overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+<script>
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('opacity-100');
+                entry.target.classList.remove('opacity-0');
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Handle horizontal scroll with mouse wheel for the thumbnail strip
+    const scrollContainer = document.querySelector('.overflow-x-auto');
+    if (scrollContainer) {
+        scrollContainer.addEventListener('wheel', (evt) => {
+            evt.preventDefault();
+            scrollContainer.scrollLeft += evt.deltaY;
+        });
+    }
+</script>
+</body></html>

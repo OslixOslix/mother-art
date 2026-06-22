@@ -1,0 +1,30 @@
+{
+    "project": {
+        "id": "4500682238300622918",
+        "title": "Elena Burkaltseva: Azure Gallery"
+    },
+    "screens": [
+        {
+            "id": "6ef0349475c8466c9d5e352043cfb950",
+            "title": "Обновленный изысканный дизайн галереи",
+            "laravel_view": "resources/views/gallery/index.blade.php",
+            "html": "stitch/gallery/index.html",
+            "screenshot": "stitch/gallery/screenshot.png"
+        },
+        {
+            "id": "1b2069907e6d4daa840d293b912fb091",
+            "title": "Главная страница (изысканная версия, финал)",
+            "laravel_view": "resources/views/home/index.blade.php",
+            "html": "stitch/home/index.html",
+            "screenshot": "stitch/home/screenshot.png"
+        },
+        {
+            "id": "78f343799bd04e4c934a5f1f6aff190c",
+            "title": "Страница работы (изысканная версия, финал)",
+            "laravel_view": "resources/views/gallery/show.blade.php",
+            "html": "stitch/artwork/index.html",
+            "screenshot": "stitch/artwork/screenshot.png"
+        }
+    ],
+    "placeholder_images": "public/images/stitch/"
+}

@@ -8,6 +8,20 @@ use Illuminate\Contracts\View\View;
 
 class GalleryController extends Controller
 {
+    public function home(): View
+    {
+        return view('home.index', [
+            'categories' => $this->categories(),
+            'featuredArtworks' => Artwork::query()
+                ->with('category')
+                ->published()
+                ->latest('published_at')
+                ->latest()
+                ->limit(6)
+                ->get(),
+        ]);
+    }
+
     public function index(): View
     {
         return view('gallery.index', [
@@ -43,9 +57,23 @@ class GalleryController extends Controller
     {
         abort_unless($artwork->is_published, 404);
 
+        $artwork->load('category');
+
         return view('gallery.show', [
             'categories' => $this->categories(),
-            'artwork' => $artwork->load('category'),
+            'artwork' => $artwork,
+            'previousArtwork' => $artwork->previousPublished(),
+            'nextArtwork' => $artwork->nextPublished(),
+            'relatedArtworks' => Artwork::query()
+                ->with('category')
+                ->published()
+                ->when($artwork->category_id, fn ($query) => $query->where('category_id', $artwork->category_id))
+                ->whereKeyNot($artwork->id)
+                ->latest('published_at')
+                ->latest()
+                ->limit(6)
+                ->get()
+                ->prepend($artwork),
         ]);
     }
 

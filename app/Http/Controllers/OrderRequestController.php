@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderRequestReceived;
 use App\Models\Artwork;
+use App\Models\Category;
 use App\Models\OrderRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,11 @@ class OrderRequestController extends Controller
 
         return view('orders.create', [
             'artwork' => $artwork->load('category'),
+            'categories' => Category::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->get(),
         ]);
     }
 

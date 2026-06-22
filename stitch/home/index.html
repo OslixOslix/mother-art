@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Елена Буркальцева | Портфолио художника</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0a1221",
+                        "on-tertiary-fixed": "#141c24",
+                        "on-primary-container": "#767d90",
+                        "on-primary-fixed": "#141c2b",
+                        "on-tertiary-container": "#767e88",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#091422",
+                        "secondary-fixed-dim": "#cbc6ba",
+                        "on-tertiary": "#29313a",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#bab5a9",
+                        "on-surface-variant": "#c6c6cd",
+                        "inverse-primary": "#575e70",
+                        "primary-fixed": "#dbe2f8",
+                        "on-background": "#d9e3f7",
+                        "primary": "#bfc6db",
+                        "surface-container-high": "#202a3a",
+                        "on-tertiary-fixed-variant": "#404851",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#4a473e",
+                        "inverse-on-surface": "#273140",
+                        "on-primary": "#293041",
+                        "on-secondary": "#333028",
+                        "surface-tint": "#bfc6db",
+                        "outline-variant": "#45474c",
+                        "background": "#091422",
+                        "tertiary": "#bfc7d2",
+                        "on-primary-fixed-variant": "#3f4758",
+                        "surface-variant": "#2b3545",
+                        "secondary-fixed": "#e8e2d6",
+                        "surface-dim": "#091422",
+                        "on-surface": "#d9e3f7",
+                        "surface-container-low": "#121c2b",
+                        "surface-container": "#16202f",
+                        "inverse-surface": "#d9e3f7",
+                        "outline": "#8f9097",
+                        "primary-fixed-dim": "#bfc6db",
+                        "on-secondary-fixed-variant": "#4a473e",
+                        "on-secondary-fixed": "#1e1c14",
+                        "on-error": "#690005",
+                        "secondary": "#cbc6ba",
+                        "surface-bright": "#303a4a",
+                        "tertiary-container": "#0b131b",
+                        "surface-container-highest": "#2b3545",
+                        "tertiary-fixed": "#dbe3ef",
+                        "tertiary-fixed-dim": "#bfc7d2",
+                        "surface-container-lowest": "#050e1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "24px",
+                        "section-gap": "160px",
+                        "margin-desktop": "80px",
+                        "item-gap": "24px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Manrope"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Bodoni Moda"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "headline-lg": ["Bodoni Moda"],
+                        "body-md": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "headline-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #091422;
+            color: #d9e3f7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-image {
+            opacity: 0;
+            scale: 1.05;
+            filter: blur(10px);
+            transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), scale 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-image.visible {
+            opacity: 1;
+            scale: 1;
+            filter: blur(0);
+        }
+        .passe-partout {
+            background: #e2e8f0; /* Sophisticated light grey for matting */
+            padding: 32px;
+            box-shadow: 0 15px 40px -15px rgba(0,0,0,0.6);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .passe-partout::after {
+            content: '';
+            position: absolute;
+            inset: 31px;
+            border: 1px solid rgba(0,0,0,0.05);
+            pointer-events: none;
+        }
+        .passe-partout:hover {
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8);
+            transform: translateY(-4px);
+        }
+        .passe-partout-inner {
+            box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            background: #f8fafc;
+        }
+        .text-kern {
+            letter-spacing: 0.1em;
+        }
+        .nav-link-active {
+            color: #bfc6db;
+            position: relative;
+        }
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #bfc6db;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary/30 font-body-md">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-2xl border-b border-outline/5">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-6 transition-all duration-700" id="nav-container">
+<a class="font-headline-md text-[24px] md:text-headline-md text-on-surface tracking-tight" href="#">Елена Буркальцева</a>
+<div class="hidden md:flex gap-12 items-center">
+<a class="font-label-sm text-label-sm uppercase tracking-widest nav-link-active" href="#">Главная</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/80 hover:text-primary transition-all duration-300" href="#gallery">Галерея</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/80 hover:text-primary transition-all duration-300" href="#about">Об авторе</a>
+<a class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/80 hover:text-primary transition-all duration-300" href="#contact">Контакты</a>
+</div>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col items-center justify-center pt-32 overflow-hidden px-margin-mobile md:px-margin-desktop">
+<div class="absolute inset-0 z-0 opacity-30">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background"></div>
+</div>
+<div class="relative z-10 max-w-7xl w-full flex flex-col md:flex-row items-center gap-20">
+<div class="w-full md:w-5/12 reveal">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-[0.4em] block mb-8">Художник-визионер</span>
+<h1 class="font-headline-xl text-headline-xl mb-10 text-on-surface italic leading-[1.05]">Тяжесть лунного света</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-14 max-w-md opacity-90">
+                    Исследование пересечений памяти и мифа сквозь призму русской поэзии начала XX века. Каждый мазок — безмолвный слог в бесконечном диалоге с вечностью.
+                </p>
+<div class="flex items-center gap-10">
+<a class="inline-block px-14 py-5 border border-outline/20 font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary/5 hover:border-primary/50 transition-all duration-700" href="#gallery">
+                        Смотреть коллекцию
+                    </a>
+<div class="hidden lg:flex items-center gap-4 text-on-surface-variant/40">
+<span class="w-12 h-[1px] bg-outline/20"></span>
+<span class="font-label-sm text-[10px] uppercase tracking-widest">Цикл 2024</span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-7/12 reveal delay-300">
+<div class="relative group max-w-lg mx-auto md:ml-auto">
+<div class="passe-partout">
+<div class="passe-partout-inner">
+<img alt="Главная работа Елены Буркальцевой: две эфирные крылатые фигуры, синяя и желтая, сливающиеся в символическом пейзаже." class="reveal-image w-full aspect-[4/5] object-cover grayscale-[0.1] group-hover:grayscale-0 transition-all duration-[2s]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrKyPYFPjMhjHuWW0TSjCsyAnFoXOYuxkAGnH8lZgFWq2qaR4v2ftBhizl5wZKTlIqVlpXhLPVAakIzeeiiZugcOJceJBlyzMhf808vxgxT4N38D6tgHvj-WwV71zXlfYo21NspCi28KbgNEuo2skA6zBECuiBMEVZBqD4iDHmHR-tuiG9xMOdGtxARsrHAXWTDYE86ENWW5hN6Xc52FcrhRKXoCxXHgBIa2lvKLste1YgaV1bzgzwyGAnfhsk2kRSaVOS9UN-22U"/>
+</div>
+</div>
+<!-- Artistic geometric accents -->
+<div class="absolute -bottom-12 -right-12 w-48 h-48 border-r border-b border-primary/10 -z-10 group-hover:scale-110 transition-transform duration-1000"></div>
+<div class="absolute -top-12 -left-12 w-48 h-48 border-l border-t border-primary/10 -z-10 group-hover:scale-110 transition-transform duration-1000"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery Section (Bento Grid with Exquisite Matting) -->
+<section class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-section-gap" id="gallery">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-28 reveal">
+<div class="mb-8 md:mb-0">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-[0.3em] block mb-5">Портфолио</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Избранное эхо</h2>
+</div>
+<div class="flex flex-col items-end gap-4">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors border-b border-outline/10 hover:border-primary pb-1 group flex items-center gap-3" href="#">
+<span>Перейти в полную галерею</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<div class="flex gap-2 items-center">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline/20"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline/20"></span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-16">
+<!-- Large Feature -->
+<div class="md:col-span-8 group reveal">
+<div class="passe-partout mb-10">
+<div class="passe-partout-inner">
+<img class="reveal-image w-full aspect-[16/9] object-cover transition-transform duration-[3000ms] group-hover:scale-105" data-alt="Картина маслом в глубоких полночных синих и туманных серебряных тонах, изображающая изолированный маяк на скалистом утесе под огромной низкой луной." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmwJhQ_YBp_mUSun524P22ZMi83f93hHNM3pWFA7VMMv8rQe68MaJq2xJlpI4SjvU9bgyu1r0NERQk6wvUWeQGaqbA4_hDl1DtlDuR6_mGSzUVkgHUogZhELeFOQhCBSiLXhTH80_HQMyW0z2ye_Mbmz1GZaetQKKnyN9fguacqzExcG9bP2PUvjU-DQaJlGJm00Dgql1rGvAEJKhfICGw0BFxZR3iLa55uRzmxZ1kcKp1mf5Kqk68UfRdKilcoxjpwzEX_e0jEkc"/>
+</div>
+</div>
+<div class="flex justify-between items-baseline border-t border-outline/5 pt-8">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Северное утешение</h3>
+<p class="font-body-md text-on-surface-variant/60 italic">Из серии «Одиночество света»</p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">2023 — Холст, масло</span>
+</div>
+</div>
+<!-- Side Feature -->
+<div class="md:col-span-4 group reveal delay-200">
+<div class="passe-partout mb-10">
+<div class="passe-partout-inner">
+<img class="reveal-image w-full aspect-[4/5] object-cover transition-transform duration-[3000ms] group-hover:scale-105" data-alt="Интимный портрет женщины в кружевном платье с высоким воротником, лицо которой частично скрыто нежной серебряной вуалью." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtW1hODItkW0-XMfimMxrIsoNskbwcfmGMVHzGJZZ_s1bQPsKhutd0kDuyYssbA3ZwqekETwXE9UGO_pav-r189UR_LApxaZaYwGcTIX2SQ2AmXOHgZo861PTaheUckEnJQygb5eek4CD3Hsuf13fRMdXMXpbcRnJ_XAiQ5mY9OoiM38zXmZusEURon2HVKD9aitkKKPII9NXaXONQd3mrIL4aiCQMOXnnwRiHIMFVtTwpe1GsX_0ttnt3fHqU2z6fedDFUaOnrU0"/>
+</div>
+</div>
+<div class="border-t border-outline/5 pt-8">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Призрак Ахматовой</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">2024 — Смешанная техника</span>
+</div>
+</div>
+<!-- Bottom Row with filtering hint -->
+<div class="md:col-span-12 flex items-center justify-center py-12 reveal">
+<div class="flex gap-8 items-center text-on-surface-variant/40 font-label-sm uppercase tracking-[0.3em]">
+<button class="hover:text-primary transition-colors">Символизм</button>
+<span class="w-1 h-1 rounded-full bg-outline/20"></span>
+<button class="text-primary border-b border-primary/30 pb-1">Метафизика</button>
+<span class="w-1 h-1 rounded-full bg-outline/20"></span>
+<button class="hover:text-primary transition-colors">Портреты</button>
+</div>
+</div>
+<div class="md:col-span-4 group reveal">
+<div class="passe-partout mb-8">
+<div class="passe-partout-inner">
+<img class="reveal-image w-full aspect-square object-cover transition-transform duration-[3000ms] group-hover:scale-105" data-alt="Абстрактная картина с изображением нежной решетки серебряных и белых линий на глубоком темно-синем фоне." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNtr-6tqM8JniEOrnbAj4tw-BaipVBEvZ2A1AkVzr3W309ymrJLpt-Lx9PxwvoR2nr1QvV72GgAIEwj0AfXxWr-XzNyY4iqAb4yp4G5OjlHi9jjTSaxANaQeR88p-nc3QIBeiex0fXuYyZ-iEOw1SKHBkiPVgy2ZN5RaJmO7nto0m5-zZTLSQKUIgNtuTBAxes_a3U33Bl1VTQGmO9p3K4pQtFoRAAL-uTc_x8rPdXJQUnR99TggQAzEkOB6-468_BTOkjpZAVQCw"/>
+</div>
+</div>
+<div class="border-t border-outline/5 pt-6 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Первый иней</h3>
+<span class="font-label-sm text-on-surface-variant/60 tracking-tighter">2022</span>
+</div>
+</div>
+<div class="md:col-span-4 group reveal delay-100">
+<div class="passe-partout mb-8">
+<div class="passe-partout-inner">
+<img class="reveal-image w-full aspect-square object-cover transition-transform duration-[3000ms] group-hover:scale-105" data-alt="Пейзаж заснеженного леса в сумерках под бледно-лавандовым небом." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFGT_9tJLDpOxz-Zw6hWmWRSXwIFzDMorDE_l4dcl9Z0LbGyLyLcZJ31S6jmK5sm_22OXygJeNtO8ejXs7fBrGKVSQnC0ZMNoYrVsT382RSVhV1PVdjPUKrjZ4W4zM_cDMFmewOKWnnrNtXUGNVR0TV0TrWu2IdXIMvcStatYMsGvzrIslcnSImGFYs3hhP_V_l1nU0A4M0bDApEihhQarB5O7INjlT0GMpWpb2fbcqahw3jJJpIc4Bg4GiNbDCizbMPQkO_fKIUU"/>
+</div>
+</div>
+<div class="border-t border-outline/5 pt-6 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Вечерняя тишь</h3>
+<span class="font-label-sm text-on-surface-variant/60 tracking-tighter">2023</span>
+</div>
+</div>
+<div class="md:col-span-4 group reveal delay-200">
+<div class="passe-partout mb-8">
+<div class="passe-partout-inner">
+<img class="reveal-image w-full aspect-square object-cover transition-transform duration-[3000ms] group-hover:scale-105" data-alt="Символическая картина упавшего серебряного крыла, лежащего в поле темной высокой травы." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtgPA9ZqBEEiUQn2A4zp5u5WHBhBSJ0c8TTZ731km7mtVdAcw_Uj-QPnSXHK8_7qz8M-vM_61YyrjjAGL6FNU7C9sUfNfnEEkjbwHjG24LhvU38v5K_JF0WENiw3SRQzVwkwa02KusmOFiQeP_cEgwKbRwCa2kUbJcjNwQgybmYucwtWYuY5WmuGu1nSn_sXq76SwoRreaAoG-UBqmPZmfbJN1EAp6fRzLk8B082GuYCnft24eZUdsAKU2YFHPMYVX8df110CxPoQ"/>
+</div>
+</div>
+<div class="border-t border-outline/5 pt-6 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Павшее крыло</h3>
+<span class="font-label-sm text-on-surface-variant/60 tracking-tighter">2024</span>
+</div>
+</div>
+</div>
+<!-- Subtle "View All" Footer -->
+<div class="mt-24 text-center reveal">
+<button class="group flex flex-col items-center gap-4 mx-auto">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.4em] text-on-surface-variant group-hover:text-primary transition-colors">Показать еще 12 работ</span>
+<span class="material-symbols-outlined text-[32px] text-primary/30 group-hover:text-primary transition-colors">expand_more</span>
+</button>
+</div>
+</section>
+<!-- About Lead-in -->
+<section class="bg-surface-container-lowest py-section-gap relative overflow-hidden" id="about">
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none">
+<div class="h-full w-full bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]"></div>
+</div>
+<div class="max-w-4xl mx-auto px-margin-mobile text-center reveal">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-[0.5em] block mb-14 italic">Философия творчества</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-14 leading-[1.3] max-w-3xl mx-auto italic">
+                «Я ищу не свет, а то, как он танцует в тенях того, что мы потеряли».
+            </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-16 max-w-2xl mx-auto leading-relaxed opacity-90">
+                Работая в тихих коридорах культурной памяти, Елена ведет непрерывный диалог с эстетикой Серебряного века. Её процесс включает наслоение тончайших полупрозрачных глазурей для достижения глубины, отражающей сложность человеческих эмоций — меланхоличных, но по самой своей сути прекрасных.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-10">
+<a class="px-14 py-5 bg-on-surface text-background font-label-sm text-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500 shadow-xl shadow-black/20" href="#">
+                    Читать биографию
+                </a>
+<a class="px-14 py-5 border border-outline/20 font-label-sm text-label-sm uppercase tracking-widest hover:bg-on-surface/5 transition-all duration-500" href="#">
+                    Список выставок
+                </a>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-section-gap" id="contact">
+<div class="grid md:grid-cols-2 gap-32">
+<div class="reveal">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-10 italic">Шепот в пустоту</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-14 leading-relaxed opacity-80">
+                    По вопросам приобретения работ из коллекции, частных заказов или если вы просто хотите поделиться созвучным стихотворением.
+                </p>
+<div class="space-y-10">
+<div class="flex items-center gap-8 group">
+<div class="w-14 h-14 flex items-center justify-center rounded-full border border-primary/10 group-hover:border-primary/40 transition-all duration-500">
+<span class="material-symbols-outlined text-primary/60 group-hover:text-primary">mail</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">studio@burkaltseva.art</span>
+</div>
+<div class="flex items-center gap-8 group">
+<div class="w-14 h-14 flex items-center justify-center rounded-full border border-primary/10 group-hover:border-primary/40 transition-all duration-500">
+<span class="material-symbols-outlined text-primary/60 group-hover:text-primary">location_on</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors">Санкт-Петербург, Культурный квартал</span>
+</div>
+</div>
+</div>
+<div class="reveal delay-200">
+<form class="space-y-14">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline/20 focus:ring-0 focus:border-primary py-5 px-0 font-body-md text-on-surface placeholder:text-on-surface-variant/40 transition-all peer" id="name" placeholder=" " type="text"/>
+<label class="absolute top-5 left-0 font-label-sm text-label-sm text-on-surface-variant/40 uppercase tracking-widest pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-top-4 group-hover:text-on-surface-variant/60" for="name">Имя</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline/20 focus:ring-0 focus:border-primary py-5 px-0 font-body-md text-on-surface placeholder:text-on-surface-variant/40 transition-all peer" id="email" placeholder=" " type="email"/>
+<label class="absolute top-5 left-0 font-label-sm text-label-sm text-on-surface-variant/40 uppercase tracking-widest pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-top-4 group-hover:text-on-surface-variant/60" for="email">Электронная почта</label>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-transparent border-0 border-b border-outline/20 focus:ring-0 focus:border-primary py-5 px-0 font-body-md text-on-surface placeholder:text-on-surface-variant/40 transition-all peer" id="message" placeholder=" " rows="3"></textarea>
+<label class="absolute top-5 left-0 font-label-sm text-label-sm text-on-surface-variant/40 uppercase tracking-widest pointer-events-none transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-top-4 group-hover:text-on-surface-variant/60" for="message">Ваше сообщение</label>
+</div>
+<button class="w-full py-6 bg-transparent border border-primary/30 font-label-sm text-label-sm uppercase tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all duration-700 shadow-lg shadow-primary/5" type="submit">
+                        Отправить корреспонденцию
+                    </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-section-gap border-t border-outline/5 bg-surface-container-lowest">
+<div class="flex flex-col items-center space-y-20 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+<div class="space-y-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Елена Буркальцева</h2>
+<p class="font-headline-md italic text-primary/60 max-w-lg mx-auto leading-snug">«Душа — это безмолвная залитая лунным светом галерея».</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-14 gap-y-6">
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60 hover:text-primary transition-all duration-500" href="#">Галерея</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60 hover:text-primary transition-all duration-500" href="#">Выставки</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60 hover:text-primary transition-all duration-500" href="#">Пресса</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60 hover:text-primary transition-all duration-500" href="#">Instagram</a>
+<a class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60 hover:text-primary transition-all duration-500" href="#">Контакты</a>
+</div>
+<div class="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-outline/10 to-transparent"></div>
+<p class="font-body-md text-[13px] text-on-surface-variant/30 uppercase tracking-[0.15em]">
+            © 2024 Елена Буркальцева. Искусство как отражение вечности.
+        </p>
+</div>
+</footer>
+<script>
+    // Reveal animation on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -80px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal, .reveal-image').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Sticky nav effect with glassmorphism transition
+    const navContainer = document.getElementById('nav-container');
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 100) {
+            navContainer.classList.remove('py-6');
+            navContainer.classList.add('py-4');
+        } else {
+            navContainer.classList.remove('py-4');
+            navContainer.classList.add('py-6');
+        }
+    });
+</script>
+</body></html>
