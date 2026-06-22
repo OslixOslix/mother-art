@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Artworks\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -46,8 +46,9 @@ class ArtworkForm
                         Toggle::make('is_published')
                             ->label('Опубликовано')
                             ->default(false),
-                        RichEditor::make('description')
+                        Textarea::make('description')
                             ->label('Описание')
+                            ->rows(5)
                             ->columnSpanFull(),
                     ]),
             ]);

@@ -86,9 +86,9 @@
 
                     <div class="space-y-8">
                         @if ($artwork->description)
-                            <div class="font-body text-lg leading-relaxed text-on-surface-variant">
-                                {!! nl2br(e($artwork->description)) !!}
-                            </div>
+                            <p class="font-body text-lg leading-relaxed text-on-surface-variant">
+                                {!! nl2br(e(strip_tags($artwork->description))) !!}
+                            </p>
                         @else
                             <p class="font-body text-lg leading-relaxed text-on-surface-variant">
                                 Глубокое исследование меланхолии «Серебряного века» — работа из личной коллекции художника.
