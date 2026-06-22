@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Artwork;
 use App\Services\ArtworkImportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -13,46 +14,48 @@ class ArtworkImportTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_import_creates_draft_artworks_from_supported_images(): void
+    public function test_dispatch_import_queues_supported_images_in_batch(): void
     {
-        Storage::fake('public');
+        Bus::fake();
 
-        $path = storage_path('framework/testing/import-artworks');
+        $path = storage_path('framework/testing/import-artworks-dispatch');
         File::ensureDirectoryExists($path);
         File::put($path.'/first-work.jpg', 'fake image');
         File::put($path.'/notes.txt', 'ignored');
 
-        $result = app(ArtworkImportService::class)->importFrom($path);
+        $result = app(ArtworkImportService::class)->dispatchImport($path);
 
-        $this->assertSame(['created' => 1, 'ignored' => 1], $result);
-        $this->assertDatabaseHas('artworks', [
-            'title' => 'First Work',
-            'is_published' => false,
-        ]);
+        $this->assertSame(1, $result['queued']);
+        $this->assertSame(1, $result['ignored']);
+        $this->assertNotNull($result['batch_id']);
 
-        $artwork = Artwork::firstOrFail();
-        Storage::disk('public')->assertExists($artwork->image_path);
-        $this->assertFileDoesNotExist($path.'/first-work.jpg');
-        $this->assertFileExists($path.'/notes.txt');
+        Bus::assertBatched(function ($batch) {
+            return $batch->name === 'import-artworks' && $batch->jobs->count() === 1;
+        });
+
+        $this->assertFileExists($path.'/first-work.jpg');
 
         File::deleteDirectory($path);
+    }
+
+    public function test_title_from_filename_formats_name(): void
+    {
+        $service = app(ArtworkImportService::class);
+
+        $this->assertSame('First Work', $service->titleFromFilename('first-work.jpg'));
+        $this->assertSame('Новая работа', $service->titleFromFilename('.jpg'));
     }
 
     public function test_imported_artwork_image_url_is_relative(): void
     {
         Storage::fake('public');
+        Storage::disk('public')->put('artworks/sample.jpg', 'fake image');
 
-        $path = storage_path('framework/testing/import-artworks-url');
-        File::ensureDirectoryExists($path);
-        File::put($path.'/sample.jpg', 'fake image');
-
-        app(ArtworkImportService::class)->importFrom($path);
-
-        $artwork = Artwork::firstOrFail();
+        $artwork = Artwork::factory()->create([
+            'image_path' => 'artworks/sample.jpg',
+        ]);
 
         $this->assertSame('/storage/'.$artwork->image_path, $artwork->imageUrl());
-
-        File::deleteDirectory($path);
     }
 
     public function test_public_storage_files_are_served(): void

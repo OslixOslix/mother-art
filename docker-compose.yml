@@ -9,3 +9,13 @@ services:
     environment:
       APP_URL: http://localhost
     restart: unless-stopped
+
+  queue:
+    build: .
+    container_name: mother-art-queue
+    command: php artisan queue:work --sleep=3 --tries=3 --timeout=600
+    volumes:
+      - .:/app
+    depends_on:
+      - app
+    restart: unless-stopped

@@ -2,52 +2,70 @@
 
 namespace App\Services;
 
-use App\Models\Artwork;
+use App\Jobs\ProcessImportArtworkJob;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArtworkImportService
 {
+    /** @var list<string> */
+    public const SUPPORTED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
     /**
-     * @return array{created: int, ignored: int}
+     * Ставит в очередь обработку всех изображений из папки импорта.
+     *
+     * @return array{queued: int, ignored: int, batch_id: ?string}
      */
-    public function importFrom(string $path): array
+    public function dispatchImport(string $path): array
     {
         File::ensureDirectoryExists($path);
 
-        $created = 0;
+        $jobs = [];
         $ignored = 0;
 
         foreach (File::files($path) as $file) {
-            if (! in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
+            if (! $this->isSupportedImage($file->getExtension())) {
                 $ignored++;
 
                 continue;
             }
 
-            $title = Str::of($file->getFilenameWithoutExtension())
-                ->replace(['_', '-'], ' ')
-                ->squish()
-                ->title()
-                ->toString();
-
-            $extension = strtolower($file->getExtension());
-            $destination = 'artworks/'.Str::uuid().'.'.$extension;
-
-            Storage::disk('public')->put($destination, File::get($file->getPathname()));
-            File::delete($file->getPathname());
-
-            Artwork::create([
-                'title' => $title ?: 'Новая работа',
-                'slug' => Artwork::uniqueSlug($title ?: 'Новая работа'),
-                'image_path' => $destination,
-                'is_published' => false,
-            ]);
-
-            $created++;
+            $jobs[] = new ProcessImportArtworkJob($file->getPathname());
         }
 
-        return compact('created', 'ignored');
+        if ($jobs === []) {
+            return [
+                'queued' => 0,
+                'ignored' => $ignored,
+                'batch_id' => null,
+            ];
+        }
+
+        $batch = Bus::batch($jobs)
+            ->name('import-artworks')
+            ->dispatch();
+
+        return [
+            'queued' => count($jobs),
+            'ignored' => $ignored,
+            'batch_id' => $batch->id,
+        ];
+    }
+
+    public function titleFromFilename(string $filename): string
+    {
+        $title = Str::of(pathinfo($filename, PATHINFO_FILENAME))
+            ->replace(['_', '-'], ' ')
+            ->squish()
+            ->title()
+            ->toString();
+
+        return $title ?: 'Новая работа';
+    }
+
+    public function isSupportedImage(string $extension): bool
+    {
+        return in_array(strtolower($extension), self::SUPPORTED_EXTENSIONS, true);
     }
 }
