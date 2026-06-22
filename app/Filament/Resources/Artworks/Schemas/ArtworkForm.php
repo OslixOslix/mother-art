@@ -42,6 +42,7 @@ class ArtworkForm
                             ->directory('artworks')
                             ->image()
                             ->imageEditor()
+                            ->maxSize(12288)
                             ->columnSpanFull(),
                         Toggle::make('is_published')
                             ->label('Опубликовано')
