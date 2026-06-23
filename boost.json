@@ -1,0 +1,13 @@
+{
+    "agents": [
+        "cursor"
+    ],
+    "cloud": false,
+    "guidelines": true,
+    "mcp": true,
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "tailwindcss-development"
+    ]
+}
