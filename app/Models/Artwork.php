@@ -42,6 +42,12 @@ class Artwork extends Model
                 $artwork->published_at = null;
             }
         });
+
+        static::deleting(function (Artwork $artwork): void {
+            if (filled($artwork->image_path)) {
+                Storage::disk('public')->delete($artwork->image_path);
+            }
+        });
     }
 
     public function category(): BelongsTo
