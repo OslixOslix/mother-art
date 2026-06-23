@@ -11,7 +11,6 @@ class GalleryController extends Controller
     public function home(): View
     {
         return view('home.index', [
-            'categories' => $this->categories(),
             'featuredArtworks' => Artwork::query()
                 ->with('category')
                 ->published()

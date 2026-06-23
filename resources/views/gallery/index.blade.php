@@ -1,7 +1,6 @@
 <x-layouts.stitch
     :title="$activeCategory ? $activeCategory->name.' | Галерея' : 'Душа — безмолвная галерея'"
-    :active-nav="$activeCategory ? 'category-'.$activeCategory->id : 'gallery'"
-    :categories="$categories"
+    :active-nav="'gallery'"
 >
     <header class="mx-auto max-w-5xl px-margin-mobile pt-60 pb-32 text-center">
         <div class="mb-8 flex items-center justify-center space-x-4 opacity-0 transition-opacity duration-1000" id="gallery-hero-ornament">

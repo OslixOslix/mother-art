@@ -1,4 +1,4 @@
-<x-layouts.stitch :title="'Заявка: '.$artwork->title" :active-nav="'gallery'" :categories="$categories ?? collect()">
+<x-layouts.stitch :title="'Заявка: '.$artwork->title" :active-nav="'gallery'">
     <section class="mx-auto max-w-5xl px-margin-mobile py-32 md:px-margin-desktop">
         <a href="{{ route('artworks.show', $artwork) }}" class="group mb-12 inline-flex items-center space-x-3 text-on-surface-variant/60 transition-colors hover:text-primary">
             <span class="material-symbols-outlined text-sm">arrow_back_ios</span>

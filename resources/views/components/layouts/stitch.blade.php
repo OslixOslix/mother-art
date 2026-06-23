@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen overflow-x-hidden bg-background font-body text-base text-on-surface antialiased selection:bg-primary/30">
-    <x-stitch.nav :active="$activeNav ?? null" :categories="$categories ?? null" />
+    <x-stitch.nav :active="$activeNav ?? null" />
 
     <main>
         @if (session('success'))

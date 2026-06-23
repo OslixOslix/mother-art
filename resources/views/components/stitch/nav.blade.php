@@ -1,4 +1,4 @@
-@props(['active' => null, 'categories' => null])
+@props(['active' => null])
 
 <nav class="fixed top-0 z-50 w-full border-b border-outline/10 bg-background/80 backdrop-blur-xl">
     <div
@@ -24,17 +24,6 @@
                     'is-active is-active--underlined' => $active === 'gallery',
                 ])
             >Галерея</a>
-            @if ($categories?->isNotEmpty())
-                @foreach ($categories->take(2) as $category)
-                    <a
-                        href="{{ route('gallery.category', $category) }}"
-                        @class([
-                            'stitch-nav-link',
-                            'is-active' => $active === 'category-'.$category->id,
-                        ])
-                    >{{ $category->name }}</a>
-                @endforeach
-            @endif
             <a href="{{ route('home') }}#contact" class="stitch-nav-link">Контакты</a>
         </div>
 

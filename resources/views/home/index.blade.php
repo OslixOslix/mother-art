@@ -1,4 +1,4 @@
-<x-layouts.stitch :title="'Елена Буркальцева | Портфолио художника'" :active-nav="'home'" :categories="$categories">
+<x-layouts.stitch :title="'Елена Буркальцева | Портфолио художника'" :active-nav="'home'">
     {{-- Hero --}}
     <section class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-margin-mobile pt-32 md:px-margin-desktop">
         <div class="absolute inset-0 z-0 opacity-30">

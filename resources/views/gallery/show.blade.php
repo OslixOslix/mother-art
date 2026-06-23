@@ -1,4 +1,4 @@
-<x-layouts.stitch :title="$artwork->title.' | Елена Буркальцева'" :active-nav="'gallery'" :categories="$categories">
+<x-layouts.stitch :title="$artwork->title.' | Елена Буркальцева'" :active-nav="'gallery'">
     <section class="min-h-screen pt-32 pb-section-gap">
         <div class="mx-auto max-w-7xl px-margin-mobile md:px-margin-desktop">
             <div class="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-center">
