@@ -3,10 +3,15 @@ const canArtworkZoom = window.matchMedia('(hover: hover) and (pointer: fine)').m
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
+const artworkZoomPanels = new WeakMap();
+
+const getArtworkZoomPanel = (wrapper) => artworkZoomPanels.get(wrapper) ?? null;
+
 const updateArtworkZoom = (wrapper, event) => {
     const source = wrapper.querySelector('.stitch-artwork-zoom-source');
-    const full = wrapper.querySelector('.stitch-artwork-zoom-full');
-    const viewport = wrapper.querySelector('.stitch-artwork-zoom-viewport');
+    const panel = getArtworkZoomPanel(wrapper);
+    const full = panel?.querySelector('.stitch-artwork-zoom-full');
+    const viewport = panel?.querySelector('.stitch-artwork-zoom-viewport');
     const indicator = wrapper.querySelector('.stitch-artwork-zoom-indicator');
 
     if (!source || !full || !viewport || !indicator || !source.naturalWidth) {
@@ -46,23 +51,51 @@ const updateArtworkZoom = (wrapper, event) => {
     indicator.hidden = false;
 };
 
+const positionArtworkZoomPanel = (wrapper) => {
+    const panel = getArtworkZoomPanel(wrapper);
+    const artworkFrame = wrapper.closest('.stitch-passe-partout-artwork');
+    const anchor = artworkFrame ?? wrapper;
+
+    if (!panel || !anchor) {
+        return;
+    }
+
+    const rect = anchor.getBoundingClientRect();
+    const panelWidth = panel.offsetWidth;
+    const viewportPadding = 16;
+
+    // Чуть выше и правее основного изображения, с заходом на заголовок
+    const top = rect.top - 32;
+    const left = clamp(
+        rect.right - panelWidth * 0.18,
+        viewportPadding,
+        window.innerWidth - panelWidth - viewportPadding,
+    );
+
+    panel.style.top = `${top}px`;
+    panel.style.left = `${left}px`;
+};
+
 const activateArtworkZoom = (wrapper) => {
-    const panel = wrapper.querySelector('.stitch-artwork-zoom-panel');
+    const panel = getArtworkZoomPanel(wrapper);
 
     wrapper.classList.add('is-active');
 
     if (panel) {
+        positionArtworkZoomPanel(wrapper);
+        panel.classList.add('is-visible');
         panel.setAttribute('aria-hidden', 'false');
     }
 };
 
 const deactivateArtworkZoom = (wrapper) => {
-    const panel = wrapper.querySelector('.stitch-artwork-zoom-panel');
+    const panel = getArtworkZoomPanel(wrapper);
     const indicator = wrapper.querySelector('.stitch-artwork-zoom-indicator');
 
     wrapper.classList.remove('is-active');
 
     if (panel) {
+        panel.classList.remove('is-visible');
         panel.setAttribute('aria-hidden', 'true');
     }
 
@@ -72,23 +105,32 @@ const deactivateArtworkZoom = (wrapper) => {
 };
 
 if (canArtworkZoom) {
+    const activeWrappers = new Set();
+
     document.querySelectorAll('[data-artwork-zoom]').forEach((wrapper) => {
         const source = wrapper.querySelector('.stitch-artwork-zoom-source');
+        const panel = wrapper.querySelector('.stitch-artwork-zoom-panel');
 
-        if (!source) {
+        if (!source || !panel) {
             return;
         }
+
+        // Панель в body — иначе правая колонка с текстом перекрывает превью
+        document.body.appendChild(panel);
+        artworkZoomPanels.set(wrapper, panel);
 
         const handleMove = (event) => {
             updateArtworkZoom(wrapper, event);
         };
 
         const handleEnter = (event) => {
+            activeWrappers.add(wrapper);
             activateArtworkZoom(wrapper);
             updateArtworkZoom(wrapper, event);
         };
 
         const handleLeave = () => {
+            activeWrappers.delete(wrapper);
             deactivateArtworkZoom(wrapper);
         };
 
@@ -96,4 +138,13 @@ if (canArtworkZoom) {
         source.addEventListener('mousemove', handleMove);
         source.addEventListener('mouseleave', handleLeave);
     });
+
+    const repositionActivePanels = () => {
+        activeWrappers.forEach((wrapper) => {
+            positionArtworkZoomPanel(wrapper);
+        });
+    };
+
+    window.addEventListener('resize', repositionActivePanels);
+    window.addEventListener('scroll', repositionActivePanels, { passive: true });
 }
