@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Artworks\Tables;
 
 use App\Models\Category;
+use App\Services\ArtworkNamingService;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -87,6 +89,36 @@ class ArtworksTable
                         ->action(fn (Collection $records, array $data) => $records->each(
                             fn ($record) => $record->update(['category_id' => $data['category_id']]),
                         )),
+                    BulkAction::make('generateTitleAndDescription')
+                        ->label('Дать название и описание')
+                        ->icon(Heroicon::OutlinedSparkles)
+                        ->requiresConfirmation()
+                        ->modalDescription('Для каждой выбранной работы с фото будет поставлена задача в очередь: OpenRouter придумает название и четверостишие.')
+                        ->action(function (Collection $records): void {
+                            $result = app(ArtworkNamingService::class)->dispatchForArtworks($records);
+
+                            if ($result['queued'] === 0) {
+                                Notification::make()
+                                    ->title('Нет работ для обработки')
+                                    ->body('У выбранных записей нет фотографий.')
+                                    ->warning()
+                                    ->send();
+
+                                return;
+                            }
+
+                            $body = "В очереди: {$result['queued']} работ. Обработка идёт в фоне.";
+
+                            if ($result['skipped'] > 0) {
+                                $body .= " Пропущено без фото: {$result['skipped']}.";
+                            }
+
+                            Notification::make()
+                                ->title('Генерация названий запущена')
+                                ->body($body)
+                                ->success()
+                                ->send();
+                        }),
                     DeleteBulkAction::make()
                         ->label('Удалить'),
                 ]),

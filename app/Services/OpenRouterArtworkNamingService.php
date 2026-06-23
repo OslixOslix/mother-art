@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 
-class OpenRouterImageService
+class OpenRouterArtworkNamingService
 {
     use ResolvesOpenRouterImageUrl;
 
     /**
-     * Обрабатывает изображение через OpenRouter и возвращает бинарные данные PNG.
+     * @return array{title: string, slug: string, quatrain: string}
      */
-    public function processForProductCard(string $absolutePath): string
+    public function generateMetadata(string $absolutePath): array
     {
         $apiKey = config('openrouter.api_key');
 
@@ -31,7 +31,7 @@ class OpenRouterImageService
 
         try {
             $payload = [
-                'model' => config('openrouter.model'),
+                'model' => config('openrouter.naming.model'),
                 'messages' => [
                     [
                         'role' => 'user',
@@ -42,13 +42,18 @@ class OpenRouterImageService
                             ],
                             [
                                 'type' => 'text',
-                                'text' => config('openrouter.import.prompt'),
+                                'text' => config('openrouter.naming.prompt'),
                             ],
                         ],
                     ],
                 ],
-                'modalities' => config('openrouter.import.modalities'),
-                'image_config' => config('openrouter.import.image_config'),
+                'response_format' => [
+                    'type' => 'json_schema',
+                    'json_schema' => config('openrouter.naming.json_schema'),
+                ],
+                'plugins' => [
+                    ['id' => 'response-healing'],
+                ],
             ];
 
             $response = Http::withToken($apiKey)
@@ -65,21 +70,36 @@ class OpenRouterImageService
                 );
             }
 
-            $data = $response->json();
-            $imageDataUrl = data_get($data, 'choices.0.message.images.0.image_url.url');
+            $content = data_get($response->json(), 'choices.0.message.content');
 
-            if (! is_string($imageDataUrl) || $imageDataUrl === '') {
+            if (! is_string($content) || $content === '') {
                 throw new RuntimeException(
-                    'OpenRouter не вернул изображение: '.json_encode($data, JSON_UNESCAPED_UNICODE)
+                    'OpenRouter не вернул текстовый ответ: '.json_encode($response->json(), JSON_UNESCAPED_UNICODE)
                 );
             }
 
-            Log::info('OpenRouter: изображение обработано', [
+            $metadata = json_decode($content, true);
+
+            if (! is_array($metadata)) {
+                throw new RuntimeException('OpenRouter вернул некорректный JSON: '.$content);
+            }
+
+            foreach (['title', 'slug', 'quatrain'] as $field) {
+                if (! is_string($metadata[$field] ?? null) || $metadata[$field] === '') {
+                    throw new RuntimeException("OpenRouter не вернул поле «{$field}».");
+                }
+            }
+
+            Log::info('OpenRouter: метаданные картины сгенерированы', [
                 'source' => basename($absolutePath),
-                'model' => config('openrouter.model'),
+                'model' => config('openrouter.naming.model'),
             ]);
 
-            return $this->decodeDataUrl($imageDataUrl);
+            return [
+                'title' => $metadata['title'],
+                'slug' => $metadata['slug'],
+                'quatrain' => $metadata['quatrain'],
+            ];
         } finally {
             if ($tempPath !== null) {
                 Storage::disk('public')->delete($tempPath);

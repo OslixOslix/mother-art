@@ -57,10 +57,11 @@ RUN mkdir -p \
     && php artisan filament:upgrade --ansi
 
 COPY docker/start-web.sh /usr/local/bin/start-web.sh
+COPY docker/start-queue-worker.sh /usr/local/bin/start-queue-worker.sh
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/start-web.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/start-web.sh /usr/local/bin/start-queue-worker.sh
 
 EXPOSE 8000
 

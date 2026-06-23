@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Jobs\ProcessImportArtworkJob;
 use App\Models\Artwork;
+use App\Services\ArtworkImportService;
 use App\Services\OpenRouterImageService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
@@ -53,7 +54,7 @@ class ProcessImportArtworkJobTest extends TestCase
         ]);
 
         $job = new ProcessImportArtworkJob($path.'/ceramic-vase.jpg');
-        $job->handle(app(OpenRouterImageService::class), app(\App\Services\ArtworkImportService::class));
+        $job->handle(app(OpenRouterImageService::class), app(ArtworkImportService::class));
 
         $this->assertDatabaseHas('artworks', [
             'title' => 'Ceramic Vase',
@@ -105,7 +106,7 @@ class ProcessImportArtworkJobTest extends TestCase
         ]);
 
         $job = new ProcessImportArtworkJob($path.'/large-piece.jpg');
-        $job->handle(app(OpenRouterImageService::class), app(\App\Services\ArtworkImportService::class));
+        $job->handle(app(OpenRouterImageService::class), app(ArtworkImportService::class));
 
         Http::assertSent(function ($request) {
             $imageUrl = (string) data_get($request->data(), 'messages.0.content.0.image_url.url');
@@ -124,9 +125,45 @@ class ProcessImportArtworkJobTest extends TestCase
         Storage::fake('public');
 
         $job = new ProcessImportArtworkJob(storage_path('framework/testing/missing-file.jpg'));
-        $job->handle(app(OpenRouterImageService::class), app(\App\Services\ArtworkImportService::class));
+        $job->handle(app(OpenRouterImageService::class), app(ArtworkImportService::class));
 
         $this->assertDatabaseCount('artworks', 0);
         Http::assertNothingSent();
+    }
+
+    public function test_job_imports_original_when_content_moderation_rejects(): void
+    {
+        Storage::fake('public');
+
+        $path = storage_path('framework/testing/import-artworks-job-moderation');
+        File::ensureDirectoryExists($path);
+        File::put($path.'/nude-study.jpg', 'original image bytes');
+
+        Http::fake([
+            'openrouter.ai/api/v1/chat/completions' => Http::response([
+                'error' => [
+                    'message' => 'Provider returned error',
+                    'metadata' => [
+                        'raw' => '{"error":"Generated image rejected by content moderation."}',
+                    ],
+                ],
+            ], 400),
+        ]);
+
+        $job = new ProcessImportArtworkJob($path.'/nude-study.jpg');
+        $job->handle(app(OpenRouterImageService::class), app(ArtworkImportService::class));
+
+        $this->assertDatabaseHas('artworks', [
+            'title' => 'Nude Study',
+            'is_published' => false,
+        ]);
+
+        $artwork = Artwork::firstOrFail();
+        $this->assertStringEndsWith('.jpg', $artwork->image_path);
+        Storage::disk('public')->assertExists($artwork->image_path);
+        $this->assertSame('original image bytes', Storage::disk('public')->get($artwork->image_path));
+        $this->assertFileDoesNotExist($path.'/nude-study.jpg');
+
+        File::deleteDirectory($path);
     }
 }

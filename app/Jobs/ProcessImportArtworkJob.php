@@ -9,8 +9,10 @@ use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class ProcessImportArtworkJob implements ShouldQueue
 {
@@ -40,9 +42,28 @@ class ProcessImportArtworkJob implements ShouldQueue
 
         $filename = basename($this->sourcePath);
         $title = $importService->titleFromFilename($filename);
-        $processedImage = $openRouter->processForProductCard($this->sourcePath);
 
-        $destination = 'artworks/'.Str::uuid().'.png';
+        try {
+            $processedImage = $openRouter->processForProductCard($this->sourcePath);
+            $extension = 'png';
+        } catch (RuntimeException $exception) {
+            if (! $this->isContentModerationRejection($exception)) {
+                throw $exception;
+            }
+
+            Log::warning('OpenRouter: модерация отклонила изображение, сохраняем оригинал', [
+                'source' => $filename,
+            ]);
+
+            $processedImage = file_get_contents($this->sourcePath);
+            $extension = $this->extensionFromFilename($filename);
+
+            if ($processedImage === false) {
+                throw new RuntimeException("Не удалось прочитать файл: {$this->sourcePath}");
+            }
+        }
+
+        $destination = 'artworks/'.Str::uuid().'.'.$extension;
 
         Storage::disk('public')->put($destination, $processedImage);
         File::delete($this->sourcePath);
@@ -53,5 +74,21 @@ class ProcessImportArtworkJob implements ShouldQueue
             'image_path' => $destination,
             'is_published' => false,
         ]);
+    }
+
+    private function isContentModerationRejection(RuntimeException $exception): bool
+    {
+        return str_contains($exception->getMessage(), 'content moderation');
+    }
+
+    private function extensionFromFilename(string $filename): string
+    {
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+        return match ($extension) {
+            'jpeg' => 'jpg',
+            'jpg', 'png', 'webp', 'gif' => $extension,
+            default => 'jpg',
+        };
     }
 }
