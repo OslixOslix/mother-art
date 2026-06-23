@@ -1,3 +1,4 @@
+# Только для локальной разработки. Railway собирает и запускает Dockerfile напрямую, без compose.
 services:
   app:
     build: .
