@@ -1,17 +1,6 @@
 <x-filament-panels::page>
     <div class="space-y-6" @if ($batchId) wire:poll.5s @endif>
-        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
-            <h2 class="text-lg font-semibold text-gray-950 dark:text-white">Папка импорта</h2>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
-                Скопируйте изображения в <code>storage/app/import-artworks</code>. Поддерживаются jpg, jpeg, png, webp и gif.
-                Каждое фото отправляется в OpenRouter для обработки: объект на белом фоне 1:1, готово для карточки товара.
-                После обработки создаются неопубликованные черновики в разделе «Работы».
-            </p>
-            <p class="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                Импорт выполняется в фоновой очереди — для пакетной загрузки (до ~100 файлов) должен работать воркер:
-                <code>php artisan queue:work</code> или сервис <code>queue</code> в Docker.
-            </p>
-        </div>
+        {{ $this->content }}
 
         @if ($status = $this->batchStatus())
             <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
@@ -33,13 +22,22 @@
                         @endif
                     </p>
                 @else
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Ожидание воркера очереди…</p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Обработка в фоновой очереди…</p>
                 @endif
             </div>
         @endif
 
-        <x-filament::button wire:click="import">
-            Импортировать фото
-        </x-filament::button>
+        <div class="flex flex-wrap gap-3">
+            <x-filament::button type="submit" form="import-form">
+                Загрузить и импортировать
+            </x-filament::button>
+            <x-filament::button color="gray" wire:click="import">
+                Импортировать из папки
+            </x-filament::button>
+        </div>
+
+        <div class="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
+            Альтернатива: скопируйте файлы в <code>storage/app/import-artworks</code> и нажмите «Импортировать из папки».
+        </div>
     </div>
 </x-filament-panels::page>

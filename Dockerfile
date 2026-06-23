@@ -56,12 +56,13 @@ RUN mkdir -p \
     && php artisan package:discover --ansi \
     && php artisan filament:upgrade --ansi
 
+COPY docker/start-web.sh /usr/local/bin/start-web.sh
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/start-web.sh
 
 EXPOSE 8000
 
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["/bin/sh", "-c", "exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
+CMD ["/usr/local/bin/start-web.sh"]

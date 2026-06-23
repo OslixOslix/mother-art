@@ -68,4 +68,13 @@ class ArtworkImportService
     {
         return in_array(strtolower($extension), self::SUPPORTED_EXTENSIONS, true);
     }
+
+    public function countImagesInPath(string $path): int
+    {
+        File::ensureDirectoryExists($path);
+
+        return collect(File::files($path))
+            ->filter(fn ($file) => $this->isSupportedImage($file->getExtension()))
+            ->count();
+    }
 }

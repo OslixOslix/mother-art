@@ -38,6 +38,14 @@ return [
             'report' => false,
         ],
 
+        'import' => [
+            'driver' => 'local',
+            'root' => storage_path('app/import-artworks'),
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

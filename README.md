@@ -53,13 +53,15 @@ Visitors submit a no-payment request from an artwork page. The request is saved 
 
 ## Bulk Import
 
-1. Copy images into `storage/app/import-artworks/`.
-2. Open `/admin`.
-3. Use the “Импорт фото” page.
+1. Open `/admin` and go to the “Импорт фото” page.
+2. Select multiple images in the upload form and click “Загрузить и импортировать”.
+3. Alternatively, copy images into `storage/app/import-artworks/` and click “Импортировать из папки”.
 4. Imported images become unpublished draft artworks.
 5. Edit each draft in “Работы”: set section, title, price, description, and publish it.
 
 Supported import extensions: `jpg`, `jpeg`, `png`, `webp`, `gif`.
+
+On Railway and in a single Docker container, the queue worker starts automatically with the web server. In local `docker-compose`, use the separate `queue` service.
 
 ## Tests
 
