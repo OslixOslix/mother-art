@@ -27,15 +27,6 @@
             </div>
         @endif
 
-        <div class="flex flex-wrap gap-3">
-            <x-filament::button type="submit" form="import-form">
-                Загрузить и импортировать
-            </x-filament::button>
-            <x-filament::button color="gray" wire:click="import">
-                Импортировать из папки
-            </x-filament::button>
-        </div>
-
         <div class="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 text-sm text-gray-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300">
             Альтернатива: скопируйте файлы в <code>storage/app/import-artworks</code> и нажмите «Импортировать из папки».
         </div>

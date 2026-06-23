@@ -8,6 +8,7 @@ use App\Services\ArtworkImportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -42,6 +43,35 @@ class ImportArtworksPageTest extends TestCase
             ->test(ImportArtworks::class)
             ->call('uploadAndImport')
             ->assertSet('batchId', null);
+    }
+
+    public function test_upload_and_import_with_files_dispatches_batch(): void
+    {
+        Bus::fake();
+
+        $user = User::factory()->create();
+        Storage::fake('import');
+        Storage::disk('import')->put('ceramic-vase.jpg', 'fake image');
+
+        Livewire::actingAs($user)
+            ->test(ImportArtworks::class)
+            ->fillForm([
+                'photos' => ['ceramic-vase.jpg'],
+            ])
+            ->call('uploadAndImport')
+            ->assertSet('batchId', fn (?string $batchId): bool => filled($batchId));
+
+        Bus::assertBatched(fn ($batch): bool => $batch->name === 'import-artworks');
+    }
+
+    public function test_page_renders_form_submit_actions(): void
+    {
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(ImportArtworks::class)
+            ->assertSee('Загрузить и импортировать')
+            ->assertSee('Импортировать из папки');
     }
 
     public function test_count_images_in_import_path(): void

@@ -3,9 +3,11 @@
 namespace App\Filament\Pages;
 
 use App\Services\ArtworkImportService;
+use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\EmbeddedSchema;
 use Filament\Schemas\Components\Form;
@@ -188,10 +190,36 @@ class ImportArtworks extends Page
             ->send();
     }
 
+    /**
+     * @return array<Action>
+     */
+    protected function getFormActions(): array
+    {
+        return [
+            Action::make('uploadAndImport')
+                ->label('Загрузить и импортировать')
+                ->submit('uploadAndImport'),
+            Action::make('import')
+                ->label('Импортировать из папки')
+                ->color('gray')
+                ->action('import'),
+        ];
+    }
+
+    public function getFormActionsContentComponent(): Component
+    {
+        return Actions::make($this->getFormActions())
+            ->alignment($this->getFormActionsAlignment())
+            ->key('form-actions');
+    }
+
     public function getFormContentComponent(): Component
     {
         return Form::make([EmbeddedSchema::make('form')])
             ->id('import-form')
-            ->livewireSubmitHandler('uploadAndImport');
+            ->livewireSubmitHandler('uploadAndImport')
+            ->footer([
+                $this->getFormActionsContentComponent(),
+            ]);
     }
 }

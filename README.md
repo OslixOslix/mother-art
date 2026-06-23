@@ -69,3 +69,25 @@ On Railway and in a single Docker container, the queue worker starts automatical
 ```bash
 php artisan test
 ```
+
+## Production (Railway)
+
+После привязки домена [elenaburkaltseva.com](https://elenaburkaltseva.com/) в Railway → **Variables** задайте:
+
+```env
+APP_URL=https://elenaburkaltseva.com
+APP_ENV=production
+APP_DEBUG=false
+APP_NAME="Елена Буркальцева"
+OPENROUTER_HTTP_REFERER=https://elenaburkaltseva.com
+```
+
+Локальный `.env` менять не нужно — там остаётся `APP_URL=http://localhost`.
+
+Не требуют смены при смене домена:
+
+- `FILESYSTEM_PUBLIC_URL` — по умолчанию `/storage` (относительные URL)
+- `SESSION_DOMAIN` — оставьте пустым (`null`)
+- прокси уже настроен в `bootstrap/app.php` (`trustProxies`)
+
+После изменения переменных Railway перезапустит деплой. Проверьте: главная, `/admin`, превью работ в галерее, импорт фото.
