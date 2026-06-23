@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Artworks\Tables;
 
+use App\Enums\ArtworkImagePreset;
+use App\Models\Artwork;
 use App\Models\Category;
 use App\Services\ArtworkNamingService;
 use Filament\Actions\BulkAction;
@@ -27,7 +29,7 @@ class ArtworksTable
             ->columns([
                 ImageColumn::make('image_path')
                     ->label('Фото')
-                    ->disk('public')
+                    ->getStateUsing(fn (Artwork $record): ?string => $record->imageUrl(ArtworkImagePreset::Admin))
                     ->square()
                     ->imageSize('7.5rem'),
                 TextColumn::make('title')

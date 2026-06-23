@@ -20,7 +20,7 @@
             <div class="stitch-reveal w-full md:w-7/12">
                 @php
                     $heroArtwork = $featuredArtworks->first();
-                    $heroImage = $heroArtwork?->imageUrl() ?? asset('images/stitch/spirit-of-twilight.jpg');
+                    $heroImage = $heroArtwork?->imageUrl(\App\Enums\ArtworkImagePreset::Hero) ?? asset('images/stitch/spirit-of-twilight.jpg');
                 @endphp
                 <div class="group relative mx-auto max-w-lg md:ml-auto">
                     <div class="stitch-passe-partout">

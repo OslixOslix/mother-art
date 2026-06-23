@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OrderRequestController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/img/{preset}/{path}', [ImageController::class, 'show'])
+    ->where('path', '.*')
+    ->name('images.show');
 
 Route::get('/', [GalleryController::class, 'home'])->name('home');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');

@@ -10,7 +10,7 @@
                 <div class="stitch-passe-partout-frame">
                     <div class="overflow-hidden bg-white/5">
                         @if ($artwork->imageUrl())
-                            <img class="aspect-[4/5] w-full object-cover" src="{{ $artwork->imageUrl() }}" alt="{{ $artwork->title }}">
+                            <img class="aspect-[4/5] w-full object-cover" src="{{ $artwork->imageUrl(\App\Enums\ArtworkImagePreset::CardPortrait) }}" alt="{{ $artwork->title }}">
                         @else
                             <div class="flex aspect-[4/5] items-center justify-center text-on-surface-variant">Фото будет добавлено</div>
                         @endif

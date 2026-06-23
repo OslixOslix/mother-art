@@ -7,6 +7,7 @@ use App\Models\Artwork;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class GalleryTest extends TestCase
@@ -49,13 +50,35 @@ class GalleryTest extends TestCase
 
     public function test_artwork_detail_includes_artwork_zoom_markup(): void
     {
-        $artwork = Artwork::factory()->create(['title' => 'Zoom Work']);
+        Storage::fake('public');
+        Storage::disk('public')->put('artworks/sample.jpg', $this->minimalJpeg());
+
+        $artwork = Artwork::factory()->create([
+            'title' => 'Zoom Work',
+            'image_path' => 'artworks/sample.jpg',
+        ]);
 
         $response = $this->get(route('artworks.show', $artwork));
 
         $response->assertOk();
         $response->assertSee('data-artwork-zoom', false);
         $response->assertSee('stitch-artwork-zoom-panel', false);
+        $response->assertSee('/img/detail/artworks/sample.jpg', false);
+        $response->assertSee('data-zoom-src="/storage/artworks/sample.jpg"', false);
+    }
+
+    private function minimalJpeg(): string
+    {
+        $image = imagecreatetruecolor(40, 50);
+        $background = imagecolorallocate($image, 120, 80, 40);
+        imagefill($image, 0, 0, $background);
+
+        ob_start();
+        imagejpeg($image, quality: 90);
+        $contents = ob_get_clean() ?: '';
+        imagedestroy($image);
+
+        return $contents;
     }
 
     public function test_category_page_filters_artworks(): void

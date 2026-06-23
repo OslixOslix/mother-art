@@ -1,7 +1,8 @@
 @props(['artwork', 'variant' => 'grid', 'stagger' => 0])
 
 @php
-    $imageUrl = $artwork->imageUrl() ?? asset('images/stitch/spirit-of-twilight.jpg');
+    $imageUrl = $artwork->imageUrl(\App\Enums\ArtworkImagePreset::forCardVariant($variant))
+        ?? asset('images/stitch/spirit-of-twilight.jpg');
     $categoryLabel = $artwork->category?->name ?? 'Работа';
 @endphp
 

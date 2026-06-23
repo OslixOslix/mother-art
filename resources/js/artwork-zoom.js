@@ -7,6 +7,31 @@ const artworkZoomPanels = new WeakMap();
 
 const getArtworkZoomPanel = (wrapper) => artworkZoomPanels.get(wrapper) ?? null;
 
+const loadArtworkZoomFullImage = (full) => {
+    const zoomSrc = full.dataset.zoomSrc;
+
+    if (!zoomSrc || full.dataset.loaded === 'true') {
+        return Promise.resolve(full);
+    }
+
+    if (full.dataset.loading === 'true') {
+        return new Promise((resolve) => {
+            full.addEventListener('load', () => resolve(full), { once: true });
+        });
+    }
+
+    full.dataset.loading = 'true';
+
+    return new Promise((resolve) => {
+        full.addEventListener('load', () => {
+            full.dataset.loaded = 'true';
+            full.dataset.loading = 'false';
+            resolve(full);
+        }, { once: true });
+        full.src = zoomSrc;
+    });
+};
+
 const updateArtworkZoom = (wrapper, event) => {
     const source = wrapper.querySelector('.stitch-artwork-zoom-source');
     const panel = getArtworkZoomPanel(wrapper);
@@ -14,7 +39,7 @@ const updateArtworkZoom = (wrapper, event) => {
     const viewport = panel?.querySelector('.stitch-artwork-zoom-viewport');
     const indicator = wrapper.querySelector('.stitch-artwork-zoom-indicator');
 
-    if (!source || !full || !viewport || !indicator || !source.naturalWidth) {
+    if (!source || !full || !viewport || !indicator || !source.naturalWidth || !full.naturalWidth) {
         return;
     }
 
@@ -22,24 +47,24 @@ const updateArtworkZoom = (wrapper, event) => {
     const x = clamp(event.clientX - rect.left, 0, rect.width);
     const y = clamp(event.clientY - rect.top, 0, rect.height);
 
-    const ratioX = source.naturalWidth / rect.width;
-    const ratioY = source.naturalHeight / rect.height;
-    const naturalX = x * ratioX;
-    const naturalY = y * ratioY;
+    const fullNaturalWidth = full.naturalWidth;
+    const fullNaturalHeight = full.naturalHeight;
+    const naturalX = (x / rect.width) * fullNaturalWidth;
+    const naturalY = (y / rect.height) * fullNaturalHeight;
 
     const viewportWidth = viewport.clientWidth;
     const viewportHeight = viewport.clientHeight;
-    const naturalWidth = source.naturalWidth;
-    const naturalHeight = source.naturalHeight;
 
-    full.style.width = `${naturalWidth}px`;
-    full.style.height = `${naturalHeight}px`;
+    full.style.width = `${fullNaturalWidth}px`;
+    full.style.height = `${fullNaturalHeight}px`;
 
-    const translateX = clamp(viewportWidth / 2 - naturalX, viewportWidth - naturalWidth, 0);
-    const translateY = clamp(viewportHeight / 2 - naturalY, viewportHeight - naturalHeight, 0);
+    const translateX = clamp(viewportWidth / 2 - naturalX, viewportWidth - fullNaturalWidth, 0);
+    const translateY = clamp(viewportHeight / 2 - naturalY, viewportHeight - fullNaturalHeight, 0);
 
     full.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
+    const ratioX = fullNaturalWidth / rect.width;
+    const ratioY = fullNaturalHeight / rect.height;
     const indicatorWidth = viewportWidth / ratioX;
     const indicatorHeight = viewportHeight / ratioY;
     const indicatorX = clamp(x - indicatorWidth / 2, 0, rect.width - indicatorWidth);
@@ -119,11 +144,17 @@ if (canArtworkZoom) {
         document.body.appendChild(panel);
         artworkZoomPanels.set(wrapper, panel);
 
+        const full = panel.querySelector('.stitch-artwork-zoom-full');
+
         const handleMove = (event) => {
             updateArtworkZoom(wrapper, event);
         };
 
-        const handleEnter = (event) => {
+        const handleEnter = async (event) => {
+            if (full) {
+                await loadArtworkZoomFullImage(full);
+            }
+
             activeWrappers.add(wrapper);
             activateArtworkZoom(wrapper);
             updateArtworkZoom(wrapper, event);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ArtworkImagePreset;
 use Database\Factories\ArtworkFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -70,9 +71,20 @@ class Artwork extends Model
         return 'slug';
     }
 
-    public function imageUrl(): ?string
+    public function imageUrl(?ArtworkImagePreset $preset = null): ?string
     {
-        return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
+        if (blank($this->image_path)) {
+            return null;
+        }
+
+        if ($preset === null) {
+            return Storage::disk('public')->url($this->image_path);
+        }
+
+        return route('images.show', [
+            'preset' => $preset->value,
+            'path' => $this->image_path,
+        ]);
     }
 
     public function formattedPrice(): ?string

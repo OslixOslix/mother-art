@@ -34,13 +34,16 @@
             <div class="grid grid-cols-1 items-start gap-20 lg:grid-cols-12">
                 <div class="stitch-fade-in-up lg:col-span-7" style="animation-delay: 0.1s">
                     @php
-                        $imageUrl = $artwork->imageUrl() ?? asset('images/stitch/princess-never-smiled.jpg');
+                        $fallbackImage = asset('images/stitch/princess-never-smiled.jpg');
+                        $imageUrl = $artwork->imageUrl(\App\Enums\ArtworkImagePreset::Detail) ?? $fallbackImage;
+                        $zoomImageUrl = $artwork->imageUrl() ?? $fallbackImage;
                     @endphp
                     <div class="stitch-passe-partout-artwork group">
                         <div class="stitch-passe-partout-artwork-inner">
                             <div class="relative overflow-hidden">
                                 <x-stitch.artwork-zoom
                                     :src="$imageUrl"
+                                    :zoom-src="$zoomImageUrl"
                                     :alt="$artwork->title"
                                     img-class="h-auto w-full"
                                 />
@@ -66,7 +69,7 @@
                                         ])
                                     >
                                         @if ($related->imageUrl())
-                                            <img class="h-full w-full object-cover" src="{{ $related->imageUrl() }}" alt="{{ $related->title }}">
+                                            <img class="h-full w-full object-cover" src="{{ $related->imageUrl(\App\Enums\ArtworkImagePreset::Thumb) }}" alt="{{ $related->title }}">
                                         @else
                                             <div class="h-full w-full bg-surface-container-high"></div>
                                         @endif
