@@ -37,6 +37,27 @@ class GalleryTest extends TestCase
         $response->assertDontSee($draft->title);
     }
 
+    public function test_gallery_does_not_include_artwork_zoom_markup(): void
+    {
+        Artwork::factory()->create(['title' => 'Gallery Work']);
+
+        $response = $this->get(route('gallery.index'));
+
+        $response->assertOk();
+        $response->assertDontSee('data-artwork-zoom', false);
+    }
+
+    public function test_artwork_detail_includes_artwork_zoom_markup(): void
+    {
+        $artwork = Artwork::factory()->create(['title' => 'Zoom Work']);
+
+        $response = $this->get(route('artworks.show', $artwork));
+
+        $response->assertOk();
+        $response->assertSee('data-artwork-zoom', false);
+        $response->assertSee('stitch-artwork-zoom-panel', false);
+    }
+
     public function test_category_page_filters_artworks(): void
     {
         $category = Category::factory()->create(['name' => 'Oil']);

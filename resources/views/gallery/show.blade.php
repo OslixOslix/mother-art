@@ -33,14 +33,17 @@
 
             <div class="grid grid-cols-1 items-start gap-20 lg:grid-cols-12">
                 <div class="stitch-fade-in-up lg:col-span-7" style="animation-delay: 0.1s">
+                    @php
+                        $imageUrl = $artwork->imageUrl() ?? asset('images/stitch/princess-never-smiled.jpg');
+                    @endphp
                     <div class="stitch-passe-partout-artwork group">
                         <div class="stitch-passe-partout-artwork-inner">
                             <div class="relative overflow-hidden">
-                                @if ($artwork->imageUrl())
-                                    <img class="h-auto w-full" src="{{ $artwork->imageUrl() }}" alt="{{ $artwork->title }}">
-                                @else
-                                    <img class="h-auto w-full" src="{{ asset('images/stitch/princess-never-smiled.jpg') }}" alt="{{ $artwork->title }}">
-                                @endif
+                                <x-stitch.artwork-zoom
+                                    :src="$imageUrl"
+                                    :alt="$artwork->title"
+                                    img-class="h-auto w-full"
+                                />
                                 <div class="pointer-events-none absolute inset-0 bg-primary/5 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
                             </div>
                         </div>

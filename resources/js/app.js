@@ -1,3 +1,5 @@
+import './artwork-zoom.js';
+
 // Анимации появления элементов при скролле (Stitch design)
 const observerOptions = {
     threshold: 0.1,
