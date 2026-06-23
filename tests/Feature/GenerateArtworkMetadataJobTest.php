@@ -39,7 +39,12 @@ class GenerateArtworkMetadataJobTest extends TestCase
         $metadata = [
             'title' => 'Тихий вечер',
             'slug' => 'tikhiy-vecher',
-            'quatrain' => "Строка первая\nСтрока вторая\nСтрока третья\nСтрока четвёртая",
+            'quatrain' => [
+                'Строка первая',
+                'Строка вторая',
+                'Строка третья',
+                'Строка четвёртая',
+            ],
         ];
 
         Http::fake([
@@ -61,7 +66,7 @@ class GenerateArtworkMetadataJobTest extends TestCase
 
         $this->assertSame('Тихий вечер', $artwork->title);
         $this->assertSame('tixii-vecer', $artwork->slug);
-        $this->assertSame($metadata['quatrain'], $artwork->description);
+        $this->assertSame("Строка первая\nСтрока вторая\nСтрока третья\nСтрока четвёртая", $artwork->description);
 
         Http::assertSent(function ($request) {
             $body = $request->data();
@@ -90,6 +95,40 @@ class GenerateArtworkMetadataJobTest extends TestCase
 
         $this->assertSame($artwork->fresh()->title, $artwork->title);
         Http::assertNothingSent();
+    }
+
+    public function test_job_normalizes_string_quatrain_with_literal_newlines(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('artworks/painting.jpg', 'fake image');
+
+        $artwork = Artwork::factory()->draft()->create([
+            'image_path' => 'artworks/painting.jpg',
+        ]);
+
+        Http::fake([
+            'openrouter.ai/api/v1/chat/completions' => Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => json_encode([
+                                'title' => 'Весна',
+                                'slug' => 'vesna',
+                                'quatrain' => 'Первая строка\\nВторая строка\\nТретья строка\\nЧетвёртая строка',
+                            ], JSON_UNESCAPED_UNICODE),
+                        ],
+                    ],
+                ],
+            ]),
+        ]);
+
+        $job = new GenerateArtworkMetadataJob($artwork->id);
+        $job->handle(app(OpenRouterArtworkNamingService::class));
+
+        $this->assertSame(
+            "Первая строка\nВторая строка\nТретья строка\nЧетвёртая строка",
+            $artwork->fresh()->description,
+        );
     }
 
     public function test_job_ensures_unique_slug_on_collision(): void

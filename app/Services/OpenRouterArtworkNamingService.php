@@ -84,11 +84,13 @@ class OpenRouterArtworkNamingService
                 throw new RuntimeException('OpenRouter вернул некорректный JSON: '.$content);
             }
 
-            foreach (['title', 'slug', 'quatrain'] as $field) {
+            foreach (['title', 'slug'] as $field) {
                 if (! is_string($metadata[$field] ?? null) || $metadata[$field] === '') {
                     throw new RuntimeException("OpenRouter не вернул поле «{$field}».");
                 }
             }
+
+            $quatrain = $this->parseQuatrain($metadata['quatrain'] ?? null);
 
             Log::info('OpenRouter: метаданные картины сгенерированы', [
                 'source' => basename($absolutePath),
@@ -98,12 +100,49 @@ class OpenRouterArtworkNamingService
             return [
                 'title' => $metadata['title'],
                 'slug' => $metadata['slug'],
-                'quatrain' => $metadata['quatrain'],
+                'quatrain' => $quatrain,
             ];
         } finally {
             if ($tempPath !== null) {
                 Storage::disk('public')->delete($tempPath);
             }
         }
+    }
+
+    /**
+     * @param  string|list<string>|null  $quatrain
+     */
+    private function parseQuatrain(string|array|null $quatrain): string
+    {
+        if (is_array($quatrain)) {
+            $lines = array_values(array_filter(
+                array_map(
+                    fn (mixed $line): string => is_string($line) ? trim($line) : '',
+                    $quatrain,
+                ),
+                fn (string $line): bool => $line !== '',
+            ));
+
+            if (count($lines) !== 4) {
+                throw new RuntimeException('OpenRouter вернул четверостишие не из четырёх строк.');
+            }
+
+            return implode("\n", $lines);
+        }
+
+        if (! is_string($quatrain) || $quatrain === '') {
+            throw new RuntimeException('OpenRouter не вернул поле «quatrain».');
+        }
+
+        return $this->normalizeQuatrain($quatrain);
+    }
+
+    private function normalizeQuatrain(string $quatrain): string
+    {
+        $quatrain = str_replace(["\r\n", "\r"], "\n", $quatrain);
+        $quatrain = str_replace('\\n', "\n", $quatrain);
+        $quatrain = preg_replace('/<br\s*\/?>/i', "\n", $quatrain) ?? $quatrain;
+
+        return trim($quatrain);
     }
 }
