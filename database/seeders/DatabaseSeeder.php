@@ -36,9 +36,13 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        User::updateOrCreate(['email' => 'admin@example.com'], [
-            'name' => 'Admin',
-            'password' => Hash::make('password'),
-        ]);
+        $adminPassword = config('gallery.admin_password');
+
+        if (filled($adminPassword)) {
+            User::updateOrCreate(['email' => config('gallery.admin_email')], [
+                'name' => config('gallery.admin_name'),
+                'password' => Hash::make($adminPassword),
+            ]);
+        }
     }
 }

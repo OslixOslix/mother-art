@@ -28,12 +28,13 @@ composer run dev
 
 Admin panel: `/admin`
 
-Seeded admin user:
+Admin user is created by `php artisan db:seed` when `ADMIN_PASSWORD` is set in `.env`:
 
-- Email: `admin@example.com`
-- Password: `password`
-
-Change this password before publishing the site.
+```env
+ADMIN_EMAIL=elena-burkaltseva@yandex.ru
+ADMIN_NAME="Елена Буркальцева"
+ADMIN_PASSWORD=your-secure-password
+```
 
 ## Email Orders
 
