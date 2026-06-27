@@ -3,7 +3,7 @@
         <div class="space-y-6">
             <h2 class="font-headline text-5xl tracking-tight text-on-surface">Елена Буркальцева</h2>
             <p class="mx-auto max-w-lg font-headline text-2xl leading-snug text-primary/60 italic">
-                «Душа — это безмолвная залитая лунным светом галерея».
+                «Душа — это внутреннее пространство памяти».
             </p>
         </div>
 
