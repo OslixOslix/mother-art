@@ -100,6 +100,10 @@
                                 Глубокое исследование меланхолии «Серебряного века» — работа из личной коллекции художника.
                             </p>
                         @endif
+
+                        @if ($artwork->dimensions())
+                            <p class="stitch-label text-on-surface-variant/60">{{ $artwork->dimensions() }}</p>
+                        @endif
                     </div>
 
                     <div class="grid grid-cols-2 gap-12 pt-4">

@@ -36,6 +36,16 @@ class ArtworkForm
                             ->label('Цена, ₽')
                             ->numeric()
                             ->minValue(0),
+                        TextInput::make('width_cm')
+                            ->label('Ширина, см')
+                            ->numeric()
+                            ->integer()
+                            ->minValue(0),
+                        TextInput::make('height_cm')
+                            ->label('Высота, см')
+                            ->numeric()
+                            ->integer()
+                            ->minValue(0),
                         FileUpload::make('image_path')
                             ->label('Главное фото')
                             ->disk('public')

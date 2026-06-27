@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-#[Fillable(['category_id', 'title', 'slug', 'price', 'description', 'image_path', 'is_published', 'published_at'])]
+#[Fillable(['category_id', 'title', 'slug', 'price', 'width_cm', 'height_cm', 'description', 'image_path', 'is_published', 'published_at'])]
 class Artwork extends Model
 {
     /** @use HasFactory<ArtworkFactory> */
@@ -90,6 +90,20 @@ class Artwork extends Model
     public function formattedPrice(): ?string
     {
         return $this->price ? number_format($this->price, 0, ',', ' ').' ₽' : null;
+    }
+
+    public function dimensions(): ?string
+    {
+        if (blank($this->width_cm) && blank($this->height_cm)) {
+            return null;
+        }
+
+        $parts = array_filter(
+            [$this->height_cm, $this->width_cm],
+            fn ($value) => filled($value),
+        );
+
+        return implode(' × ', $parts).' см';
     }
 
     public function previousPublished(): ?self

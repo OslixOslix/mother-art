@@ -26,6 +26,8 @@ class ArtworkFactory extends Factory
             'title' => Str::title($title),
             'slug' => Str::slug($title).'-'.fake()->unique()->numberBetween(1000, 9999),
             'price' => fake()->optional()->numberBetween(5000, 100000),
+            'width_cm' => fake()->optional()->numberBetween(10, 200),
+            'height_cm' => fake()->optional()->numberBetween(10, 200),
             'description' => fake()->optional()->paragraph(),
             'image_path' => null,
             'is_published' => true,
