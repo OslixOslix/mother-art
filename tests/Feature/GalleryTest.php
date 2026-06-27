@@ -137,4 +137,51 @@ class GalleryTest extends TestCase
 
         $this->get(route('artworks.show', $artwork))->assertNotFound();
     }
+
+    public function test_home_shows_only_featured_artworks_when_enough(): void
+    {
+        $featured = Artwork::factory()->count(5)->featured()->create();
+        $notFeatured = Artwork::factory()->count(5)->create();
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        foreach ($featured as $artwork) {
+            $response->assertSee($artwork->title);
+        }
+    }
+
+    public function test_home_fills_missing_featured_with_random(): void
+    {
+        $featured = Artwork::factory()->count(2)->featured()->create();
+        $notFeatured = Artwork::factory()->count(10)->create();
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        foreach ($featured as $artwork) {
+            $response->assertSee($artwork->title);
+        }
+    }
+
+    public function test_home_shows_all_random_when_no_featured(): void
+    {
+        Artwork::factory()->count(10)->create(['is_featured' => false]);
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        $response->assertSee('Избранное эхо', false);
+    }
+
+    public function test_featured_drafts_dont_show(): void
+    {
+        $draftFeatured = Artwork::factory()->count(3)->featured()->draft()->create();
+        Artwork::factory()->count(5)->create(['is_featured' => false]);
+
+        $response = $this->get(route('home'));
+
+        $response->assertOk();
+        $response->assertDontSee($draftFeatured->first()->title);
+    }
 }

@@ -31,6 +31,7 @@ class ArtworkFactory extends Factory
             'description' => fake()->optional()->paragraph(),
             'image_path' => null,
             'is_published' => true,
+            'is_featured' => false,
             'published_at' => now(),
         ];
     }
@@ -40,6 +41,13 @@ class ArtworkFactory extends Factory
         return $this->state(fn (): array => [
             'is_published' => false,
             'published_at' => null,
+        ]);
+    }
+
+    public function featured(): static
+    {
+        return $this->state(fn (): array => [
+            'is_featured' => true,
         ]);
     }
 }

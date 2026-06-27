@@ -12,14 +12,29 @@ class GalleryController extends Controller
 {
     public function home(): View
     {
-        return view('home.index', [
-            'featuredArtworks' => Artwork::query()
+        $featuredPool = Artwork::query()
+            ->with('category')
+            ->published()
+            ->featured()
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        if ($featuredPool->count() < 5) {
+            $excludeIds = $featuredPool->pluck('id');
+            $filler = Artwork::query()
                 ->with('category')
                 ->published()
-                ->latest('published_at')
-                ->latest()
-                ->limit(6)
-                ->get(),
+                ->when($excludeIds->isNotEmpty(), fn ($q) => $q->whereKeyNot($excludeIds))
+                ->inRandomOrder()
+                ->limit(5 - $featuredPool->count())
+                ->get();
+
+            $featuredPool = $featuredPool->concat($filler);
+        }
+
+        return view('home.index', [
+            'featuredArtworks' => $featuredPool,
             'heroArtworks' => Artwork::query()
                 ->published()
                 ->latest('published_at')

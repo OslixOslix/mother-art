@@ -68,7 +68,7 @@
             </div>
 
             <div class="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-12">
-                @foreach ($featuredArtworks->take(5) as $index => $artwork)
+                @foreach ($featuredArtworks as $index => $artwork)
                     @if ($index === 0)
                         <x-stitch.artwork-card :artwork="$artwork" variant="featured-large" />
                     @elseif ($index === 1)
@@ -78,15 +78,6 @@
                     @endif
                 @endforeach
             </div>
-
-            @if ($featuredArtworks->count() > 5)
-                <div class="stitch-reveal mt-24 text-center">
-                    <a href="{{ route('gallery.index') }}" class="group mx-auto flex flex-col items-center gap-4">
-                        <span class="stitch-label tracking-[0.4em] text-on-surface-variant group-hover:text-primary">Показать все работы</span>
-                        <span class="material-symbols-outlined text-[32px] text-primary/30 group-hover:text-primary">expand_more</span>
-                    </a>
-                </div>
-            @endif
         </section>
     @endif
 

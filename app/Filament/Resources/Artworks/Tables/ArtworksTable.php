@@ -47,6 +47,9 @@ class ArtworksTable
                 IconColumn::make('is_published')
                     ->label('Опубл.')
                     ->boolean(),
+                IconColumn::make('is_featured')
+                    ->label('Избр.')
+                    ->boolean(),
                 TextColumn::make('created_at')
                     ->label('Создано')
                     ->dateTime('d.m.Y H:i')
@@ -70,6 +73,8 @@ class ArtworksTable
                     ->query(fn ($query) => $query->whereNull('price')),
                 TernaryFilter::make('is_published')
                     ->label('Опубликовано'),
+                TernaryFilter::make('is_featured')
+                    ->label('В избранном'),
             ])
             ->recordActions([
                 EditAction::make(),
@@ -91,6 +96,22 @@ class ArtworksTable
                         ->deselectRecordsAfterCompletion()
                         ->action(fn (Collection $records) => $records->each(
                             fn ($record) => $record->update(['is_published' => false]),
+                        )),
+                    BulkAction::make('featured')
+                        ->label('Добавить в избранное')
+                        ->icon(Heroicon::OutlinedStar)
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(fn (Collection $records) => $records->each(
+                            fn ($record) => $record->update(['is_featured' => true]),
+                        )),
+                    BulkAction::make('unfeatured')
+                        ->label('Убрать из избранного')
+                        ->icon(Heroicon::OutlinedXMark)
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(fn (Collection $records) => $records->each(
+                            fn ($record) => $record->update(['is_featured' => false]),
                         )),
                     BulkAction::make('moveToCategory')
                         ->label('Перенести в раздел')

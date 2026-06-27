@@ -57,6 +57,8 @@ class ArtworkForm
                         Toggle::make('is_published')
                             ->label('Опубликовано')
                             ->default(false),
+                        Toggle::make('is_featured')
+                            ->label('В избранное'),
                         Textarea::make('description')
                             ->label('Описание')
                             ->rows(5)

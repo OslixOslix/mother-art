@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-#[Fillable(['category_id', 'title', 'slug', 'price', 'width_cm', 'height_cm', 'description', 'image_path', 'is_published', 'published_at'])]
+#[Fillable(['category_id', 'title', 'slug', 'price', 'width_cm', 'height_cm', 'description', 'image_path', 'is_published', 'is_featured', 'published_at'])]
 class Artwork extends Model
 {
     /** @use HasFactory<ArtworkFactory> */
@@ -24,6 +24,7 @@ class Artwork extends Model
         return [
             'price' => 'integer',
             'is_published' => 'boolean',
+            'is_featured' => 'boolean',
             'published_at' => 'datetime',
         ];
     }
@@ -64,6 +65,11 @@ class Artwork extends Model
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_published', true);
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('is_featured', true);
     }
 
     public function getRouteKeyName(): string
