@@ -40,7 +40,7 @@ function initHeroCarousel() {
 
             const onTextTransitionEnd = () => {
                 titleEl.textContent = incoming.dataset.title;
-                descEl.textContent = incoming.dataset.description;
+                descEl.innerHTML = incoming.dataset.description.replace(/\n/g, '<br>');
                 titleWrap.classList.remove('is-fading');
                 descWrap.classList.remove('is-fading');
                 titleWrap.removeEventListener('transitionend', onTextTransitionEnd);
