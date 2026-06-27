@@ -17,17 +17,17 @@ class GalleryController extends Controller
             ->published()
             ->featured()
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(12)
             ->get();
 
-        if ($featuredPool->count() < 8) {
+        if ($featuredPool->count() < 12) {
             $excludeIds = $featuredPool->pluck('id');
             $filler = Artwork::query()
                 ->with('category')
                 ->published()
                 ->when($excludeIds->isNotEmpty(), fn ($q) => $q->whereKeyNot($excludeIds))
                 ->inRandomOrder()
-                ->limit(8 - $featuredPool->count())
+                ->limit(12 - $featuredPool->count())
                 ->get();
 
             $featuredPool = $featuredPool->concat($filler);
