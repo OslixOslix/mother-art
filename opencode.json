@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "formatter": {},
+  "mcp": {
+    "railway": {
+      "type": "local",
+      "command": ["npx", "-y", "@anthropic/mcp-server-railway"],
+      "enabled": true
+    }
+  }
+}
