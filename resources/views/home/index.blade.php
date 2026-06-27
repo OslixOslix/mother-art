@@ -21,7 +21,7 @@
                 </a>
             </div>
 
-            <div class="stitch-reveal w-full md:w-7/12" id="hero-carousel" data-interval="3000">
+            <div class="stitch-reveal w-full md:w-7/12" id="hero-carousel" data-interval="6000">
                 <div class="group relative mx-auto max-w-lg md:ml-auto">
                     <div class="stitch-passe-partout">
                         <div class="stitch-passe-partout-inner stitch-hero-grid overflow-hidden">
