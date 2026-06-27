@@ -48,7 +48,8 @@ class OrderRequestsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

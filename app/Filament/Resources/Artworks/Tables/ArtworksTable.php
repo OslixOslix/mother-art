@@ -80,6 +80,7 @@ class ArtworksTable
                         ->label('Опубликовать')
                         ->icon(Heroicon::OutlinedEye)
                         ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
                         ->action(fn (Collection $records) => $records->each(
                             fn ($record) => $record->update(['is_published' => true]),
                         )),
@@ -87,12 +88,14 @@ class ArtworksTable
                         ->label('Снять с публикации')
                         ->icon(Heroicon::OutlinedEyeSlash)
                         ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
                         ->action(fn (Collection $records) => $records->each(
                             fn ($record) => $record->update(['is_published' => false]),
                         )),
                     BulkAction::make('moveToCategory')
                         ->label('Перенести в раздел')
                         ->icon(Heroicon::OutlinedFolderArrowDown)
+                        ->deselectRecordsAfterCompletion()
                         ->schema([
                             Select::make('category_id')
                                 ->label('Раздел')
@@ -108,6 +111,7 @@ class ArtworksTable
                         ->label('Дать название и описание')
                         ->icon(Heroicon::OutlinedSparkles)
                         ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
                         ->modalDescription('Для каждой выбранной работы с фото будет поставлена задача в очередь: OpenRouter придумает название и четверостишие.')
                         ->action(function (Collection $records): void {
                             $result = app(ArtworkNamingService::class)->dispatchForArtworks($records);
@@ -135,7 +139,8 @@ class ArtworksTable
                                 ->send();
                         }),
                     DeleteBulkAction::make()
-                        ->label('Удалить'),
+                        ->label('Удалить')
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }
