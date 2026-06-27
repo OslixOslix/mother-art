@@ -55,6 +55,18 @@ class ArtworksTable
                 SelectFilter::make('category_id')
                     ->label('Раздел')
                     ->relationship('category', 'name'),
+                Filter::make('no_category')
+                    ->label('Без раздела')
+                    ->toggle()
+                    ->query(fn ($query) => $query->whereNull('category_id')),
+                Filter::make('no_size')
+                    ->label('Без размера')
+                    ->toggle()
+                    ->query(fn ($query) => $query->whereNull('width_cm')->whereNull('height_cm')),
+                Filter::make('no_price')
+                    ->label('Без цены')
+                    ->toggle()
+                    ->query(fn ($query) => $query->whereNull('price')),
                 TernaryFilter::make('is_published')
                     ->label('Опубликовано'),
             ])
