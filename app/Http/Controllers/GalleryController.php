@@ -24,7 +24,6 @@ class GalleryController extends Controller
                 ->published()
                 ->latest('published_at')
                 ->latest()
-                ->limit(10)
                 ->get(),
         ]);
     }
