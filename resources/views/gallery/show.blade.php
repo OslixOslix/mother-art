@@ -100,12 +100,6 @@
                                 Глубокое исследование меланхолии «Серебряного века» — работа из личной коллекции художника.
                             </p>
                         @endif
-
-                        <div class="border-l border-primary/20 py-2 pl-8">
-                            <p class="font-body text-base leading-relaxed text-secondary/60 italic">
-                                «Душа — это тихая галерея в лунном свете, где даже тени венчаны инеем».
-                            </p>
-                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-12 pt-4">
