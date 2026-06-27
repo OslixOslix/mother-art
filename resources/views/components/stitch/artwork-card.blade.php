@@ -49,7 +49,7 @@
     </a>
 @elseif ($variant === 'featured-small')
     <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-4" style="transition-delay: {{ $stagger }}ms; transform: translateY({{ $offset }}px)">
-        <div class="stitch-passe-partout mb-4">
+        <div class="stitch-passe-partout">
             <div class="stitch-passe-partout-inner">
                 <img
                     class="stitch-reveal-image aspect-square w-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
@@ -58,12 +58,6 @@
                     loading="lazy"
                 >
             </div>
-        </div>
-        <div class="flex items-center justify-between border-t border-outline/5 pt-4">
-            <h3 class="font-headline text-[32px] text-on-surface">{{ $artwork->title }}</h3>
-            @if ($artwork->formattedPrice())
-                <span class="stitch-label text-on-surface-variant/60">{{ $artwork->formattedPrice() }}</span>
-            @endif
         </div>
     </a>
 @else
