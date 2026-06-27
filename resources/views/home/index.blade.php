@@ -105,14 +105,9 @@
                         <div class="flex h-14 w-14 items-center justify-center rounded-full border border-primary/10 transition-all duration-500 group-hover:border-primary/40">
                             <span class="material-symbols-outlined text-primary/60 group-hover:text-primary">mail</span>
                         </div>
-                        <span class="font-body text-on-surface-variant transition-colors group-hover:text-on-surface">studio@burkaltseva.art</span>
+                        <span class="font-body text-on-surface-variant transition-colors group-hover:text-on-surface">elena-burkaltseva@yandex.ru</span>
                     </div>
-                    <div class="group flex items-center gap-8">
-                        <div class="flex h-14 w-14 items-center justify-center rounded-full border border-primary/10 transition-all duration-500 group-hover:border-primary/40">
-                            <span class="material-symbols-outlined text-primary/60 group-hover:text-primary">location_on</span>
-                        </div>
-                        <span class="font-body text-on-surface-variant transition-colors group-hover:text-on-surface">Санкт-Петербург, Культурный квартал</span>
-                    </div>
+
                 </div>
             </div>
 

@@ -16,7 +16,7 @@
         <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-outline/10 to-transparent"></div>
 
         <p class="font-body text-[13px] tracking-[0.15em] text-on-surface-variant/30 uppercase">
-            © {{ date('Y') }} Елена Буркальцева. Искусство как отражение вечности.
+            © {{ date('Y') }} Елена Буркальцева.
         </p>
     </div>
 </footer>
