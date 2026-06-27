@@ -70,7 +70,7 @@
             @php
                 $offsets = [-48, 72, -32, 56, -40, 48, -24, 40, -16, 64, -56, 32];
             @endphp
-            <div class="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-12">
+            <div class="grid grid-cols-1 gap-x-16 gap-y-40 md:grid-cols-12">
                 @foreach ($featuredArtworks as $index => $artwork)
                     @php $offset = $offsets[$index] ?? 0; @endphp
                     <x-stitch.artwork-card :artwork="$artwork" variant="featured-small" :stagger="$index * 100" :offset="$offset" />
