@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Artwork;
 use App\Models\Category;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
@@ -55,6 +57,35 @@ class GalleryController extends Controller
                 ->latest('published_at')
                 ->latest()
                 ->paginate(24),
+        ]);
+    }
+
+    public function loadMore(Request $request): JsonResponse
+    {
+        $query = Artwork::query()
+            ->with('category')
+            ->published()
+            ->latest('published_at')
+            ->latest();
+
+        $category = null;
+
+        if ($request->filled('category')) {
+            $category = Category::where('slug', $request->input('category'))->firstOrFail();
+            abort_unless($category->is_active, 404);
+            $query->whereBelongsTo($category);
+        }
+
+        $artworks = $query->paginate(24);
+
+        $html = '';
+        foreach ($artworks as $artwork) {
+            $html .= view('components.stitch.artwork-card', ['artwork' => $artwork])->render();
+        }
+
+        return response()->json([
+            'html' => $html,
+            'hasMore' => $artworks->hasMorePages(),
         ]);
     }
 

@@ -37,7 +37,6 @@ function initHeroCarousel() {
         show(next);
     }, interval);
 
-    // Pause on hover
     container.addEventListener('mouseenter', () => clearInterval(timer));
     container.addEventListener('mouseleave', () => {
         timer = setInterval(() => {
@@ -61,16 +60,13 @@ const revealObserver = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.stitch-reveal, .stitch-reveal-image, .stitch-gallery-item').forEach((el) => {
-    revealObserver.observe(el);
-});
+// --- Scroll-fill observer ---
+let fillObserver = null;
 
-// --- Scroll-fill: image grows as the gallery item enters viewport ---
-function initScrollFill() {
-    const items = document.querySelectorAll('.stitch-fill-image');
-    if (items.length === 0) return;
+function ensureFillObserver() {
+    if (fillObserver) return fillObserver;
 
-    const fillObserver = new IntersectionObserver((entries) => {
+    fillObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             const ratio = entry.intersectionRatio;
             const el = entry.target;
@@ -94,15 +90,16 @@ function initScrollFill() {
         rootMargin: '-10% 0px -10% 0px',
     });
 
-    items.forEach((el) => fillObserver.observe(el));
+    return fillObserver;
 }
 
-// --- Parallax: image shifts as gallery item moves through viewport ---
-function initParallax() {
-    const items = document.querySelectorAll('.stitch-parallax-inner');
-    if (items.length === 0) return;
+// --- Parallax observer ---
+let parallaxObserver = null;
 
-    const parallaxObserver = new IntersectionObserver((entries) => {
+function ensureParallaxObserver() {
+    if (parallaxObserver) return parallaxObserver;
+
+    parallaxObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             const el = entry.target;
             const rect = el.closest('.stitch-gallery-item')?.getBoundingClientRect();
@@ -122,15 +119,52 @@ function initParallax() {
         rootMargin: '0px',
     });
 
-    items.forEach((el) => parallaxObserver.observe(el));
+    return parallaxObserver;
+}
+
+// --- Scroll-fill: image grows as the gallery item enters viewport ---
+function initScrollFill(scope) {
+    const items = (scope || document).querySelectorAll('.stitch-fill-image');
+    if (items.length === 0) return;
+
+    const observer = ensureFillObserver();
+    items.forEach((el) => observer.observe(el));
+}
+
+// --- Parallax: image shifts as gallery item moves through viewport ---
+function initParallax(scope) {
+    const items = (scope || document).querySelectorAll('.stitch-parallax-inner');
+    if (items.length === 0) return;
+
+    const observer = ensureParallaxObserver();
+    items.forEach((el) => observer.observe(el));
+}
+
+// --- Observe reveal and gallery items ---
+function observeRevealItems(scope) {
+    const container = scope || document;
+    container.querySelectorAll('.stitch-reveal, .stitch-reveal-image, .stitch-gallery-item').forEach((el) => {
+        revealObserver.observe(el);
+    });
+}
+
+// --- Re-initialize observers on newly appended elements ---
+function refreshObservers(container) {
+    initScrollFill(container);
+    initParallax(container);
+    initTilt(container);
+    observeRevealItems(container);
 }
 
 // --- 3D tilt on hover for gallery cards ---
-function initTilt() {
-    const containers = document.querySelectorAll('.stitch-tilt-container');
+function initTilt(scope) {
+    const containers = (scope || document).querySelectorAll('.stitch-tilt-container');
     if (containers.length === 0) return;
 
     containers.forEach((container) => {
+        if (container.dataset.tiltInitialized === 'true') return;
+        container.dataset.tiltInitialized = 'true';
+
         const card = container.querySelector('.stitch-tilt-card');
         if (!card) return;
 
@@ -158,6 +192,85 @@ function initTilt() {
     });
 }
 
+// --- Infinite scroll ---
+function initInfiniteScroll() {
+    const sentinel = document.querySelector('[data-infinite-scroll-sentinel]');
+    if (!sentinel) return;
+
+    const grid = sentinel.closest('section')?.querySelector('.stitch-gallery-grid');
+    const statusEl = document.querySelector('.stitch-infinite-scroll-status');
+    if (!grid || !statusEl) return;
+
+    let loading = false;
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+        if (loading) return;
+
+        const hasMore = grid.dataset.infiniteScrollHasMore === 'true';
+        if (!hasMore) return;
+
+        loading = true;
+
+        const page = parseInt(grid.dataset.infiniteScrollPage, 10);
+        const baseUrl = grid.dataset.infiniteScrollUrl;
+        const separator = baseUrl.includes('?') ? '&' : '?';
+        const url = `${baseUrl}${separator}page=${page}`;
+
+        fetch(url, {
+            headers: { 'Accept': 'application/json' },
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('Network error');
+                return response.json();
+            })
+            .then((data) => {
+                if (data.html) {
+                    const fragment = document.createElement('div');
+                    fragment.innerHTML = data.html;
+
+                    const newCards = fragment.querySelectorAll('.stitch-gallery-item');
+                    newCards.forEach((card, i) => {
+                        card.style.transitionDelay = `${i * 80}ms`;
+                        grid.appendChild(card);
+                    });
+
+                    requestAnimationFrame(() => {
+                        refreshObservers(grid);
+                        newCards.forEach((card) => card.classList.add('is-visible'));
+                    });
+                }
+
+                grid.dataset.infiniteScrollHasMore = data.hasMore ? 'true' : 'false';
+                grid.dataset.infiniteScrollPage = String(page + 1);
+
+                if (!data.hasMore) {
+                    sentinel.remove();
+                    statusEl.innerHTML = `
+                        <div class="stitch-scroll-end py-16">
+                            <div class="mx-auto flex items-center justify-center space-x-4">
+                                <div class="stitch-ornament-line w-16"></div>
+                                <span class="material-symbols-outlined text-2xl text-primary/30">blur_on</span>
+                                <div class="stitch-ornament-line w-16"></div>
+                            </div>
+                            <p class="mt-6 font-body text-sm text-on-surface-variant/30">Все работы этого раздела перед вами</p>
+                        </div>
+                    `;
+                }
+
+                loading = false;
+            })
+            .catch(() => {
+                loading = false;
+            });
+    }, {
+        rootMargin: '200px 0px',
+    });
+
+    scrollObserver.observe(sentinel);
+}
+
 // --- Gallery hero animation ---
 window.addEventListener('DOMContentLoaded', () => {
     const title = document.getElementById('gallery-hero-title');
@@ -173,9 +286,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     initHeroCarousel();
+    observeRevealItems();
     initScrollFill();
     initParallax();
     initTilt();
+    initInfiniteScroll();
 });
 
 // --- Nav compression on scroll ---

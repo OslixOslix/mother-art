@@ -11,6 +11,7 @@ Route::get('/img/{preset}/{path}', [ImageController::class, 'show'])
 
 Route::get('/', [GalleryController::class, 'home'])->name('home');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/gallery/load-more', [GalleryController::class, 'loadMore'])->name('gallery.load-more');
 Route::get('/category/{category}', [GalleryController::class, 'category'])->name('gallery.category');
 Route::get('/artworks/{artwork}', [GalleryController::class, 'show'])->name('artworks.show');
 Route::get('/artworks/{artwork}/order', [OrderRequestController::class, 'create'])->name('orders.create');
