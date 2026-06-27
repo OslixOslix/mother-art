@@ -10,6 +10,11 @@ function initHeroCarousel() {
 
     if (slides.length < 2) return;
 
+    const titleWrap = document.querySelector('.stitch-hero-text-wrap:first-of-type');
+    const descWrap = document.querySelector('.stitch-hero-text-wrap:last-of-type');
+    const titleEl = titleWrap?.querySelector('h1');
+    const descEl = descWrap?.querySelector('p');
+
     let current = 0;
     let timer = null;
 
@@ -23,11 +28,25 @@ function initHeroCarousel() {
         outgoing.classList.remove('is-visible');
         outgoing.classList.add('is-fading-out');
 
-        const onTransitionEnd = () => {
+        const onSlideTransitionEnd = () => {
             outgoing.classList.remove('is-fading-out');
-            outgoing.removeEventListener('transitionend', onTransitionEnd);
+            outgoing.removeEventListener('transitionend', onSlideTransitionEnd);
         };
-        outgoing.addEventListener('transitionend', onTransitionEnd);
+        outgoing.addEventListener('transitionend', onSlideTransitionEnd);
+
+        if (titleWrap && descWrap) {
+            titleWrap.classList.add('is-fading');
+            descWrap.classList.add('is-fading');
+
+            const onTextTransitionEnd = () => {
+                titleEl.textContent = incoming.dataset.title;
+                descEl.textContent = incoming.dataset.description;
+                titleWrap.classList.remove('is-fading');
+                descWrap.classList.remove('is-fading');
+                titleWrap.removeEventListener('transitionend', onTextTransitionEnd);
+            };
+            titleWrap.addEventListener('transitionend', onTextTransitionEnd);
+        }
 
         current = index;
     }

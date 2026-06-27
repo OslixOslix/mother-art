@@ -8,10 +8,14 @@
         <div class="relative z-10 flex w-full max-w-7xl flex-col items-center gap-20 md:flex-row">
             <div class="stitch-reveal w-full md:w-5/12">
                 <span class="stitch-label mb-8 block tracking-[0.4em] text-primary">Художник-визионер</span>
-                <h1 class="mb-10 font-headline text-5xl leading-[1.05] text-on-surface italic md:text-[64px]">Тяжесть лунного света</h1>
-                <p class="mb-14 max-w-md font-body text-lg font-light leading-relaxed text-on-surface-variant opacity-90">
-                    Исследование пересечений памяти и мифа сквозь призму русской поэзии начала XX века. Каждый мазок — безмолвный слог в бесконечном диалоге с вечностью.
-                </p>
+                <div class="stitch-hero-text-wrap mb-10">
+                    <h1 class="font-headline text-5xl leading-[1.05] text-on-surface italic md:text-[64px]">Тяжесть лунного света</h1>
+                </div>
+                <div class="stitch-hero-text-wrap mb-14">
+                    <p class="max-w-md font-body text-lg font-light leading-relaxed text-on-surface-variant opacity-90">
+                        Исследование пересечений памяти и мифа сквозь призму русской поэзии начала XX века. Каждый мазок — безмолвный слог в бесконечном диалоге с вечностью.
+                    </p>
+                </div>
                 <a href="{{ route('gallery.index') }}" class="stitch-btn-outline">
                     Смотреть коллекцию
                 </a>
@@ -24,7 +28,7 @@
                             @if ($heroArtworks->isNotEmpty())
                                 @foreach ($heroArtworks as $index => $heroArt)
                                     @php $heroImg = $heroArt->imageUrl(\App\Enums\ArtworkImagePreset::Hero); @endphp
-                                    <a href="{{ route('artworks.show', $heroArt) }}" class="stitch-hero-slide block {{ $index === 0 ? 'is-visible' : '' }}" data-index="{{ $index }}">
+                                    <a href="{{ route('artworks.show', $heroArt) }}" class="stitch-hero-slide block {{ $index === 0 ? 'is-visible' : '' }}" data-index="{{ $index }}" data-title="{{ $heroArt->title }}" data-description="{{ $heroArt->description ?: 'Исследование пересечений памяти и мифа сквозь призму русской поэзии начала XX века. Каждый мазок — безмолвный слог в бесконечном диалоге с вечностью.' }}">
                                         <img
                                             class="aspect-[4/5] w-full object-cover grayscale-[0.1] transition-all duration-[2s] group-hover:grayscale-0"
                                             src="{{ $heroImg }}"
