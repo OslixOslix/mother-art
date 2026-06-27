@@ -67,14 +67,18 @@
                 </a>
             </div>
 
+            @php
+                $offsets = [-48, 72, -32, 56, -40, 48, -24, 40];
+            @endphp
             <div class="grid grid-cols-1 gap-x-16 gap-y-24 md:grid-cols-12">
                 @foreach ($featuredArtworks as $index => $artwork)
+                    @php $offset = $offsets[$index] ?? 0; @endphp
                     @if ($index === 0)
-                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-large" />
+                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-large" :offset="$offset" />
                     @elseif ($index === 1)
-                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-side" :stagger="200" />
+                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-side" :stagger="200" :offset="$offset" />
                     @else
-                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-small" :stagger="($index - 1) * 100" />
+                        <x-stitch.artwork-card :artwork="$artwork" variant="featured-small" :stagger="($index - 1) * 100" :offset="$offset" />
                     @endif
                 @endforeach
             </div>

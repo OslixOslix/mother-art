@@ -1,4 +1,4 @@
-@props(['artwork', 'variant' => 'grid', 'stagger' => 0])
+@props(['artwork', 'variant' => 'grid', 'stagger' => 0, 'offset' => 0])
 
 @php
     $imageUrl = $artwork->imageUrl(\App\Enums\ArtworkImagePreset::forCardVariant($variant))
@@ -7,7 +7,7 @@
 @endphp
 
 @if ($variant === 'featured-large')
-    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-8">
+    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-8" style="transform: translateY({{ $offset }}px)">
         <div class="stitch-passe-partout mb-10">
             <div class="stitch-passe-partout-inner">
                 <img
@@ -31,7 +31,7 @@
         </div>
     </a>
 @elseif ($variant === 'featured-side')
-    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-4" style="transition-delay: {{ $stagger }}ms">
+    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-4" style="transition-delay: {{ $stagger }}ms; transform: translateY({{ $offset }}px)">
         <div class="stitch-passe-partout mb-10">
             <div class="stitch-passe-partout-inner">
                 <img
@@ -48,7 +48,7 @@
         </div>
     </a>
 @elseif ($variant === 'featured-small')
-    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-4" style="transition-delay: {{ $stagger }}ms">
+    <a href="{{ route('artworks.show', $artwork) }}" class="group stitch-reveal block md:col-span-4" style="transition-delay: {{ $stagger }}ms; transform: translateY({{ $offset }}px)">
         <div class="stitch-passe-partout mb-8">
             <div class="stitch-passe-partout-inner">
                 <img
