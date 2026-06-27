@@ -4,7 +4,7 @@
   "mcp": {
     "railway": {
       "type": "local",
-      "command": ["npx", "-y", "@anthropic/mcp-server-railway"],
+      "command": ["/home/oslixoslix/.railway/bin/railway", "mcp"],
       "enabled": true
     }
   }
