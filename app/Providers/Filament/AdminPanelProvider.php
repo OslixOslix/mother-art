@@ -27,7 +27,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->locale('ru')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
