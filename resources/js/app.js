@@ -14,8 +14,21 @@ function initHeroCarousel() {
     let timer = null;
 
     function show(index) {
-        slides[current].classList.remove('is-visible');
-        slides[index].classList.add('is-visible');
+        const outgoing = slides[current];
+        const incoming = slides[index];
+
+        if (outgoing === incoming) return;
+
+        incoming.classList.add('is-visible');
+        outgoing.classList.remove('is-visible');
+        outgoing.classList.add('is-fading-out');
+
+        const onTransitionEnd = () => {
+            outgoing.classList.remove('is-fading-out');
+            outgoing.removeEventListener('transitionend', onTransitionEnd);
+        };
+        outgoing.addEventListener('transitionend', onTransitionEnd);
+
         current = index;
     }
 
