@@ -128,8 +128,9 @@
     .stitch-passe-partout-frame {
         background-color: var(--color-passe-partout);
         box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.05), 0 20px 40px rgba(0, 0, 0, 0.4);
-        padding: 40px;
+        padding: 24px;
         border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: box-shadow 0.8s ease, padding 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .stitch-passe-partout-artwork {
@@ -261,6 +262,64 @@
         transform: translate(0, 0);
         will-change: transform;
     }
+
+    .stitch-hero-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: scale(1.08);
+        transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+        will-change: opacity, transform;
+    }
+
+    .stitch-hero-slide.is-visible {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+        z-index: 1;
+    }
+
+    .stitch-hero-slide:not(.is-visible) {
+        z-index: 0;
+    }
+
+    .stitch-fill-image {
+        overflow: hidden;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stitch-fill-image.is-filling {
+        transform: scale(1.12);
+    }
+
+    .stitch-parallax-inner {
+        transition: transform 0.3s ease-out;
+        will-change: transform;
+    }
+
+    .stitch-tilt-container {
+        perspective: 1200px;
+    }
+
+    .stitch-tilt-card {
+        transition: box-shadow 0.4s ease, transform 0.1s ease-out;
+        transform-style: preserve-3d;
+    }
+
+    .stitch-glow-frame {
+        position: absolute;
+        inset: -1px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.6s ease;
+        box-shadow: 0 0 30px rgba(191, 198, 219, 0.15), 0 0 60px rgba(191, 198, 219, 0.05);
+        z-index: -1;
+    }
+
+    .group:hover .stitch-glow-frame {
+        opacity: 1;
+    }
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -288,6 +347,6 @@
 
 @media (max-width: 768px) {
     .stitch-passe-partout-frame {
-        padding: 24px;
+        padding: 16px;
     }
 }

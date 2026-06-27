@@ -17,19 +17,28 @@
                 </a>
             </div>
 
-            <div class="stitch-reveal w-full md:w-7/12">
-                @php
-                    $heroArtwork = $featuredArtworks->first();
-                    $heroImage = $heroArtwork?->imageUrl(\App\Enums\ArtworkImagePreset::Hero) ?? asset('images/stitch/spirit-of-twilight.jpg');
-                @endphp
+            <div class="stitch-reveal w-full md:w-7/12" id="hero-carousel" data-interval="3000">
                 <div class="group relative mx-auto max-w-lg md:ml-auto">
                     <div class="stitch-passe-partout">
-                        <div class="stitch-passe-partout-inner">
-                            <img
-                                class="stitch-reveal-image aspect-[4/5] w-full object-cover grayscale-[0.1] transition-all duration-[2s] group-hover:grayscale-0"
-                                src="{{ $heroImage }}"
-                                alt="{{ $heroArtwork?->title ?? 'Главная работа' }}"
-                            >
+                        <div class="stitch-passe-partout-inner relative overflow-hidden">
+                            @if ($heroArtworks->isNotEmpty())
+                                @foreach ($heroArtworks as $index => $heroArt)
+                                    @php $heroImg = $heroArt->imageUrl(\App\Enums\ArtworkImagePreset::Hero); @endphp
+                                    <a href="{{ route('artworks.show', $heroArt) }}" class="stitch-hero-slide block {{ $index === 0 ? 'is-visible' : '' }}" data-index="{{ $index }}">
+                                        <img
+                                            class="aspect-[4/5] w-full object-cover grayscale-[0.1] transition-all duration-[2s] group-hover:grayscale-0"
+                                            src="{{ $heroImg }}"
+                                            alt="{{ $heroArt->title }}"
+                                        >
+                                    </a>
+                                @endforeach
+                            @else
+                                <img
+                                    class="aspect-[4/5] w-full object-cover grayscale-[0.1] transition-all duration-[2s] group-hover:grayscale-0"
+                                    src="{{ asset('images/stitch/spirit-of-twilight.jpg') }}"
+                                    alt="Главная работа"
+                                >
+                            @endif
                         </div>
                     </div>
                     <div class="absolute -right-12 -bottom-12 -z-10 h-48 w-48 border-r border-b border-primary/10 transition-transform duration-1000 group-hover:scale-110"></div>

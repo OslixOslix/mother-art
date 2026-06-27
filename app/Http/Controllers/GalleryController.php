@@ -18,6 +18,12 @@ class GalleryController extends Controller
                 ->latest()
                 ->limit(6)
                 ->get(),
+            'heroArtworks' => Artwork::query()
+                ->published()
+                ->latest('published_at')
+                ->latest()
+                ->limit(10)
+                ->get(),
         ]);
     }
 

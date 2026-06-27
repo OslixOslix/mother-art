@@ -67,12 +67,13 @@
         </div>
     </a>
 @else
-    <article class="stitch-gallery-item group">
-        <a href="{{ route('artworks.show', $artwork) }}">
+    <article class="stitch-gallery-item group stitch-tilt-container">
+        <a href="{{ route('artworks.show', $artwork) }}" class="stitch-tilt-card relative block">
+            <div class="stitch-glow-frame"></div>
             <div class="stitch-passe-partout-frame mb-8">
-                <div class="overflow-hidden bg-white/5">
+                <div class="stitch-fill-image">
                     <img
-                        class="aspect-[3/4] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                        class="stitch-parallax-inner aspect-[3/4] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         src="{{ $imageUrl }}"
                         alt="{{ $artwork->title }}"
                         loading="lazy"
